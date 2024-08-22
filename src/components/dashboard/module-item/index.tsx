@@ -64,10 +64,10 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
     <Fragment>
       <div
         className={cn(
-          "w-full p-7 transition-height duration-300 ease-in-out bg-white drop-shadow-l text-spicy_mix rounded-xl flex justify-between",
+          "w-full px-12 py-4 transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-primary-foreground rounded-xl flex justify-between items-center",
           !moduleExpanded
             ? " h-20 mb-4 cursor-pointer"
-            : " h-72 bg-white drop-shadow-l text-primary-foreground align-middle mb-4 "
+            : " h-72 bg-primary drop-shadow-l align-middle mb-4 "
         )}
       >
         {!moduleExpanded ? (
@@ -101,7 +101,7 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
                       <FormLabel>Module name</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="shadcn"
+                          placeholder="Enter module name"
                           className="w-full"
                           {...field}
                         />

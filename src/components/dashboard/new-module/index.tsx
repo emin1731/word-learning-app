@@ -34,10 +34,10 @@ export function NewModule() {
       <div>
         <div
           className={cn(
-            "w-full p-7 transition-height duration-300 ease-in-out bg-white drop-shadow-l text-primary rounded-xl ",
+            "w-full p-7 transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-primary-foreground rounded-xl ",
             !moduleExpanded
               ? " h-20 mb-4 cursor-pointer"
-              : " h-72 bg-white drop-shadow-l text-primary-foreground align-middle mb-4 "
+              : " h-72 bg-primary drop-shadow-l align-middle mb-4 "
           )}
         >
           {!moduleExpanded ? (
@@ -45,9 +45,7 @@ export function NewModule() {
               className="flex justify-center align-middle"
               onClick={() => setModuleExpanded(true)}
             >
-              <p className="text-xl font-semibold text-primary-foreground">
-                New Module
-              </p>
+              <p className="text-xl font-semibold">New Module</p>
             </div>
           ) : (
             <Form {...form}>
@@ -64,7 +62,7 @@ export function NewModule() {
                         <FormLabel>Username</FormLabel>
                         <FormControl>
                           <Input
-                            placeholder="shadcn"
+                            placeholder="Enter module name"
                             className="w-full"
                             {...field}
                           />
