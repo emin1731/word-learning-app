@@ -26,11 +26,8 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex md:items-center justify-between py-16 md:py-0 md:bg-background">
-      <div className="hidden  h-screen w-1/2 items-center justify-center md:flex">
-        <img src={LoginImg} alt="Login" className=" rounded-r-10xl h-full" />
-      </div>
-      <div className="relative w-full flex flex-col md:min-h-screen md:w-1/2 px-6 md:p-6 lg:p-26 lg:px-20">
-        <div className="md:absolute md:top-5 md:right-5 flex justify-center md:justify-end mb-10">
+      <div className="relative w-full flex flex-col md:min-h-screen md:w-1/2 px-6 md:p-6 lg:p-26 lg:px-24">
+        <div className="md:absolute md:top-5 md:left-5 flex justify-center md:justify-end mb-10">
           <Logo className="w-32 md:w-20" />
         </div>
         <div className="flex-1 w-full flex items-center justify-center">
@@ -115,6 +112,9 @@ export default function LoginPage() {
             </form>
           </Form>
         </div>
+      </div>
+      <div className="hidden  h-screen w-1/2 items-center justify-center md:flex">
+        <img src={LoginImg} alt="Login" className=" rounded-l-10xl h-full" />
       </div>
     </div>
   );
