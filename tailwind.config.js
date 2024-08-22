@@ -1,3 +1,5 @@
+const { register } = require("module");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
@@ -9,6 +11,23 @@ module.exports = {
   ],
   prefix: "",
   theme: {
+    borderRadius: {
+      none: "0",
+      sm: "0.125rem",
+      DEFAULT: "0.25rem",
+      DEFAULT: "4px",
+      md: "0.375rem",
+      lg: "0.5rem",
+      full: "9999px",
+      xl: "0.75rem",
+      "2xl": "1rem",
+      "3xl": "1.5rem",
+      "4xl": "2rem",
+      "5xl": "2.5rem",
+      "6xl": "48px",
+      "7xl": "3.5rem",
+      "10xl": "5rem",
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -20,6 +39,10 @@ module.exports = {
       sans: "League Spartan, Georgia",
     },
     extend: {
+      backgroundImage: {
+        login: "url('/src/assets/login-page.png')",
+        register: "url('/src/assets/register-page.png')",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
