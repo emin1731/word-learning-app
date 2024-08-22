@@ -1,7 +1,7 @@
 import { Fragment, useState } from "react";
 // import CustomSelect from "../custom-select";
 // import NewModule from "../new-module";
-import ModuleItem from "@/components/dashboard/module-item";
+import { ModuleItem } from "@/components/dashboard/module-item/module-item";
 import { NewModule } from "@/components/dashboard/new-module/";
 import {
   DropdownMenu,
