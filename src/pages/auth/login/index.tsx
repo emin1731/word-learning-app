@@ -14,15 +14,33 @@ import { Input } from "@/components/ui/input";
 import Logo from "@/components/common/logo";
 import LoginImg from "@/assets/login-page.png";
 import { Link } from "react-router-dom";
+import { useLogin } from "@/api/queries/auth.queries";
 
 export default function LoginPage() {
+  const { mutateAsync: login, isPending } = useLogin();
+
   const form = useForm<LoginType>({
     resolver: zodResolver(LoginSchema),
   });
 
   const onSubmit = async (data: LoginType) => {
-    alert(JSON.stringify(data));
+    try {
+      const res = await login(data);
+      console.log("Login Response:", res); // Check the structure here
+
+      if (res.ok) {
+        alert(`Login successful: ${res.data.accessToken}`);
+        console.log(res.data);
+      }
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
+      alert(e.response?.data || "An error occurred");
+    }
   };
+
+  if (isPending) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen flex md:items-center justify-between py-16 md:py-0 md:bg-background">
