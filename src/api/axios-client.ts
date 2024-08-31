@@ -1,3 +1,8 @@
+import {
+  getAccessTokenFromCookies,
+  getRefreshTokenFromCookies,
+  setTokensInCookies,
+} from "@/lib/cookie-handler";
 import axios from "axios";
 
 export const client = axios.create({
@@ -10,7 +15,7 @@ export const client = axios.create({
 
 client.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken"); // Get stored access token
+    const accessToken = getAccessTokenFromCookies(); // Get stored access token
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`; // Set in header
     }
@@ -26,7 +31,7 @@ client.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // Mark the request as retried to avoid infinite loops.
       try {
-        const refreshToken = localStorage.getItem("refreshToken"); // Retrieve the stored refresh token.
+        const refreshToken = getRefreshTokenFromCookies(); // Retrieve the stored refresh token.
 
         // Make a request to your auth server to refresh the token.
         const response = await axios.post(
@@ -37,8 +42,7 @@ client.interceptors.response.use(
         );
         const { accessToken, refreshToken: newRefreshToken } = response.data;
         // Store the new access and refresh tokens.
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", newRefreshToken);
+        setTokensInCookies(accessToken, newRefreshToken);
 
         // Update the authorization header with the new access token.
         client.defaults.headers.common[

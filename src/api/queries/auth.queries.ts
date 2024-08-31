@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "../axios-client";
-// import { useAuthStore } from "@/store/index";
+import { setTokensInCookies } from "@/lib/cookie-handler";
 
 export function useLogin() {
   return useMutation({
@@ -9,8 +9,7 @@ export function useLogin() {
         const { data } = await client.post("/auth/login", requestBody);
         const { accessToken, refreshToken } = data;
 
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        setTokensInCookies(accessToken, refreshToken);
 
         return { ok: true, data };
       } catch (error) {
