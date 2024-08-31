@@ -22,3 +22,24 @@ export function useLogin() {
     },
   });
 }
+
+export function useRegister() {
+  return useMutation({
+    mutationFn: async (requestBody: { email: string; password: string }) => {
+      try {
+        const { data } = await client.post("/auth/register", requestBody);
+        const { accessToken, refreshToken } = data;
+
+        setTokensInCookies(accessToken, refreshToken);
+
+        return { ok: true, data };
+      } catch (error) {
+        console.error("Register error:", error);
+        return { ok: false, error: error || "Register failed" };
+      }
+    },
+    onSuccess: () => {
+      console.log("Token set, ready for authenticated requests");
+    },
+  });
+}
