@@ -2,6 +2,7 @@ import { DashboardLayout } from "@/components/layouts/dashboard";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
 import { HomePage } from "@/pages/dashboard/homepage";
+import { ModulePage } from "@/pages/dashboard/module";
 import { ProfilePage } from "@/pages/profile-set";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -11,6 +12,7 @@ export default function RoutesProvider() {
       <Routes>
         <Route path="dashboard" element={<DashboardLayout />}>
           <Route index element={<HomePage />} />
+          <Route path={":moduleId"} element={<ModulePage />} />
         </Route>
         <Route path="auth">
           <Route path="login" element={<LoginPage />} />

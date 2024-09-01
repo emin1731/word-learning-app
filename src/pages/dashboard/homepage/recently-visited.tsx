@@ -31,7 +31,10 @@ export const RecentlyVisited = () => {
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">
         {modules.map((module: RecentModule) => (
-          <div className="h-40 rounded-xl p-5 bg-white drop-shadow-l text-primary-foreground">
+          <div
+            className="h-40 rounded-xl p-5 bg-white drop-shadow-l text-primary-foreground"
+            key={module.name}
+          >
             <p className="text-xl font-semibold ">{module.name}</p>
             <p>{module.word_count} words</p>
           </div>

@@ -15,12 +15,12 @@ export function useGetModules() {
   });
 }
 
-export function useGetModuleById() {
-  return useMutation({
-    mutationKey: ["module"],
-    mutationFn: async (id: string) => {
+export function useGetModuleById(moduleId: string) {
+  return useQuery({
+    queryKey: ["module"],
+    queryFn: async () => {
       try {
-        const res = await client.get(`/modules/${id}`);
+        const res = await client.get(`/modules/${moduleId}`);
         return { ok: true, data: res.data };
       } catch (error) {
         return { ok: false, error: error || "Failed to fetch module" };

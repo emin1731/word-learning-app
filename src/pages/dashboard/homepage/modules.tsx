@@ -1,6 +1,4 @@
 import { Fragment, useState } from "react";
-// import CustomSelect from "../custom-select";
-// import NewModule from "../new-module";
 import { ModuleItem } from "@/components/dashboard/module-item/";
 import { NewModule } from "@/components/dashboard/new-module/";
 import {
@@ -14,31 +12,32 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ModuleDto } from "@/lib/dto/module.dto";
 
-const modules = [
-  {
-    id: "1",
-    name: "Module 1",
-    description: "This is module 1",
-    numberOfTerms: 20,
-    terms: [
-      {
-        id: "1",
-        term: "Term 1",
-        definition: "This is term 1",
-        starred: false,
-      },
-      {
-        id: "2",
-        term: "Term 2",
-        definition: "This is term 2",
-        starred: false,
-      },
-    ],
-  },
-];
+// const modules = [
+//   {
+//     id: "1",
+//     name: "Module 1",
+//     description: "This is module 1",
+//     numberOfTerms: 20,
+//     terms: [
+//       {
+//         id: "1",
+//         term: "Term 1",
+//         definition: "This is term 1",
+//         starred: false,
+//       },
+//       {
+//         id: "2",
+//         term: "Term 2",
+//         definition: "This is term 2",
+//         starred: false,
+//       },
+//     ],
+//   },
+// ];
 
-export function ModulesComponent() {
+export function ModulesComponent({ modules }: { modules: ModuleDto[] }) {
   const [position, setPosition] = useState("bottom");
 
   return (
@@ -99,8 +98,7 @@ export function ModulesComponent() {
               id={item.id}
               name={item.name}
               description={item.description}
-              numberOfTerms={item.numberOfTerms}
-              //   terms={item.terms}
+              numberOfTerms={10}
               key={item.id}
             />
           );
