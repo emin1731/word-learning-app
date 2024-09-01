@@ -1,6 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { client } from "../axios-client";
-import { setTokensInCookies } from "@/lib/cookie-handler";
+import {
+  removeTokensFromCookies,
+  setTokensInCookies,
+} from "@/lib/cookie-handler";
+import Cookies from "js-cookie";
 
 export function useLogin() {
   return useMutation({
@@ -10,10 +14,19 @@ export function useLogin() {
         const { accessToken, refreshToken } = data;
 
         setTokensInCookies(accessToken, refreshToken);
+        Cookies.set("isLoggedIn", "true", {
+          secure: true,
+          sameSite: "Strict",
+        });
 
         return { ok: true, data };
       } catch (error) {
         console.error("Login error:", error);
+        removeTokensFromCookies();
+        Cookies.set("isLoggedIn", "false", {
+          secure: true,
+          sameSite: "Strict",
+        });
         return { ok: false, error: error || "Login failed" };
       }
     },
@@ -31,10 +44,19 @@ export function useRegister() {
         const { accessToken, refreshToken } = data;
 
         setTokensInCookies(accessToken, refreshToken);
+        Cookies.set("isLoggedIn", "true", {
+          secure: true,
+          sameSite: "Strict",
+        });
 
         return { ok: true, data };
       } catch (error) {
         console.error("Register error:", error);
+        removeTokensFromCookies();
+        Cookies.set("isLoggedIn", "false", {
+          secure: true,
+          sameSite: "Strict",
+        });
         return { ok: false, error: error || "Register failed" };
       }
     },

@@ -1,9 +1,11 @@
 import {
   getAccessTokenFromCookies,
   getRefreshTokenFromCookies,
+  removeTokensFromCookies,
   setTokensInCookies,
 } from "@/lib/cookie-handler";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const client = axios.create({
   baseURL: import.meta.env.VITE_API_URL || "http://localhost:8001/",
@@ -43,6 +45,10 @@ client.interceptors.response.use(
         const { accessToken, refreshToken: newRefreshToken } = response.data;
         // Store the new access and refresh tokens.
         setTokensInCookies(accessToken, newRefreshToken);
+        Cookies.set("isLoggedIn", "true", {
+          secure: true,
+          sameSite: "Strict",
+        });
 
         // Update the authorization header with the new access token.
         client.defaults.headers.common[
@@ -53,6 +59,11 @@ client.interceptors.response.use(
       } catch (refreshError) {
         // Handle refresh token errors by clearing stored tokens and redirecting to the login page.
         console.error("Token refresh failed:", refreshError);
+        removeTokensFromCookies();
+        Cookies.set("isLoggedIn", "false", {
+          secure: true,
+          sameSite: "Strict",
+        });
         return Promise.reject(refreshError);
       }
     }

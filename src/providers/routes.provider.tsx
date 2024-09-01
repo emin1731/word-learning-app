@@ -1,3 +1,4 @@
+import { AuthOnlyLayout } from "@/components/layouts/auth";
 import { DashboardLayout } from "@/components/layouts/dashboard";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
@@ -10,9 +11,11 @@ export default function RoutesProvider() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="dashboard" element={<DashboardLayout />}>
-          <Route index element={<HomePage />} />
-          <Route path={":moduleId"} element={<ModulePage />} />
+        <Route element={<AuthOnlyLayout />}>
+          <Route path="dashboard" element={<DashboardLayout />}>
+            <Route index element={<HomePage />} />
+            <Route path={":moduleId"} element={<ModulePage />} />
+          </Route>
         </Route>
         <Route path="auth">
           <Route path="login" element={<LoginPage />} />
