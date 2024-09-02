@@ -6,7 +6,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../../ui/input";
@@ -16,10 +15,12 @@ import { Textarea } from "../../ui/textarea";
 import { NewModuleSchema, NewModuleType } from "./schema";
 import { useCreateModule } from "@/api/queries/module.queries";
 import { useQueryClient } from "@tanstack/react-query";
+import { useOutsideClick } from "@/lib/hooks/use-outside-click";
 
 export function NewModule() {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
   const queryClient = useQueryClient(); // Get the query client
+  const ref = useOutsideClick(() => onClose());
 
   const { mutateAsync: createModule, data: mutateData } = useCreateModule({
     onSuccess: () => {
@@ -52,78 +53,80 @@ export function NewModule() {
       <div>
         <div
           className={cn(
-            "w-full p-7 transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-primary-foreground rounded-xl ",
+            "w-full p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
             !moduleExpanded
               ? " h-20 mb-4 cursor-pointer"
-              : " h-72 bg-primary drop-shadow-l align-middle mb-4 "
+              : " h-48 bg-primary drop-shadow-l align-middle mb-4 "
           )}
         >
           {!moduleExpanded ? (
             <div
-              className="flex justify-center align-middle"
+              className="flex justify-center items-center h-full"
               onClick={() => setModuleExpanded(true)}
             >
-              <p className="text-xl font-semibold">New Module</p>
+              <p className="text-xl font-semibold">Create new module</p>
             </div>
           ) : (
-            <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-2 h-full flex justify-between items-center gap-10"
-              >
-                <div className="mb-4 flex flex-col gap-3 w-full">
-                  <FormField
-                    control={form.control}
-                    name="name"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter module name"
-                            className="w-full"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Username</FormLabel>
-                        <FormControl>
-                          <Textarea
-                            placeholder="Description of the module"
-                            className="h-20"
-                            {...field}
-                          />
-                        </FormControl>
-
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <Button
-                  type="button"
-                  className="bg-secondary h-10 w-1/2 self-end"
-                  onClick={() => onClose()}
+            <div ref={ref} className="h-full flex items-center">
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="w-full h-auto flex justify-center items-end gap-x-5"
                 >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="bg-secondary h-10 w-1/2 self-end"
-                >
-                  Submit
-                </Button>
-              </form>
-            </Form>
+                  <div className="flex flex-col justify-center gap-3 w-full">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({ field }) => (
+                        <FormItem>
+                          {/* <FormLabel>Module name</FormLabel> */}
+                          <FormControl>
+                            <Input
+                              placeholder="Enter module name"
+                              className="w-full"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem>
+                          {/* <FormLabel>Module description</FormLabel> */}
+                          <FormControl>
+                            <Textarea
+                              placeholder="Enter the description of the module"
+                              className="min-h-24"
+                              {...field}
+                            />
+                          </FormControl>
+
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    className="bg-secondary h-10 w-1/2 self-end"
+                    onClick={() => onClose()}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="bg-secondary h-10 w-1/2 self-end"
+                  >
+                    Submit
+                  </Button>
+                </form>
+              </Form>
+            </div>
           )}
         </div>
       </div>

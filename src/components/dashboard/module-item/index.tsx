@@ -6,7 +6,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../../ui/input";
@@ -17,6 +16,7 @@ import { ModuleItemSchema, ModuleItemType } from "./schema";
 import { Link } from "react-router-dom";
 import { EditIcon } from "lucide-react";
 import { useDeleteModule } from "@/api/queries/module.queries";
+import { useOutsideClick } from "@/lib/hooks/use-outside-click";
 
 export interface Module {
   id: string;
@@ -42,6 +42,7 @@ export interface Term {
 export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
   const { mutateAsync: deleteModule } = useDeleteModule();
+  const ref = useOutsideClick(() => onClose());
 
   const form = useForm<ModuleItemType>({
     resolver: zodResolver(ModuleItemSchema),
@@ -69,14 +70,14 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
     <Fragment>
       <div
         className={cn(
-          "w-full px-12 py-4 transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-primary-foreground rounded-xl flex justify-between items-center",
+          "w-full px-10 py-5 bg-primary drop-shadow-l text-primary-foreground rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
           !moduleExpanded
             ? " h-20 cursor-pointer"
-            : " h-72 bg-primary drop-shadow-l align-middle"
+            : " h-48 bg-primary drop-shadow-l align-middle"
         )}
       >
         {!moduleExpanded ? (
-          <>
+          <div className="h-full flex justify-between items-center">
             <div>
               <Link to={id} relative="path">
                 <p className="text-2xl font-semibold">{name} </p>
@@ -90,72 +91,75 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
                 onClick={() => setModuleExpanded(true)}
               />
             </div>
-          </>
+          </div>
         ) : (
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="w-full space-y-2 h-full flex justify-between items-center gap-10"
-            >
-              <div className="mb-4 flex flex-col gap-3 w-full">
-                <FormField
-                  control={form.control}
-                  name="moduleName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Module name</FormLabel>
-                      <FormControl>
-                        <Input
-                          placeholder="Enter module name"
-                          className="w-full"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+          <div ref={ref} className="h-full flex items-center">
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full space-y-2 h-full flex justify-between items-center gap-x-5"
+              >
+                <div className="flex flex-col gap-3 w-full">
+                  <FormField
+                    control={form.control}
+                    name="moduleName"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Input
+                            placeholder="Enter module name"
+                            className="w-full"
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="moduleDescription"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Description</FormLabel>
-                      <FormControl>
-                        <Textarea
-                          placeholder="Description of the module"
-                          className="h-32"
-                          {...field}
-                        />
-                      </FormControl>
+                  <FormField
+                    control={form.control}
+                    name="moduleDescription"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormControl>
+                          <Textarea
+                            placeholder="Description of the module"
+                            className="min-h-24"
+                            {...field}
+                          />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
-              <div className="flex justify-end items-end gap-x-4 self-end">
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+                {/* <div className="flex justify-end items-end gap-x-4 self-end"> */}
                 <Button
                   type="button"
-                  className="bg-secondary h-10 px-6"
+                  className="bg-secondary h-10 px-6 self-end"
                   onClick={() => onClose()}
                 >
                   Cancel
                 </Button>
                 <Button
                   type="button"
-                  className="bg-secondary h-10 px-6"
+                  className="bg-secondary h-10 px-6 self-end"
                   onClick={() => onDelete()}
                 >
                   Delete
                 </Button>
-                <Button type="submit" className="bg-secondary h-10 px-6">
+                <Button
+                  type="submit"
+                  className="bg-secondary h-10 px-6 self-end"
+                >
                   Submit
                 </Button>
-              </div>
-            </form>
-          </Form>
+                {/* </div> */}
+              </form>
+            </Form>
+          </div>
         )}
       </div>
     </Fragment>

@@ -9,11 +9,11 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "../../ui/input";
 import { useForm } from "react-hook-form";
+import { useOutsideClick } from "@/lib/hooks/use-outside-click";
 
 interface TermItemProps {
   term: string;
@@ -31,6 +31,7 @@ function TermItem({
   learningStatus,
 }: TermItemProps) {
   const [termExpanded, setTermExpanded] = useState<boolean>(false);
+  const ref = useOutsideClick(() => onClose());
 
   const form = useForm<TermItemType>({
     resolver: zodResolver(TermItemSchema),
@@ -41,6 +42,7 @@ function TermItem({
   });
   const onSubmit = async (data: TermItemType) => {
     alert(JSON.stringify(data));
+    onClose();
   };
   const onClose = () => {
     form.reset();
@@ -60,7 +62,7 @@ function TermItem({
         className={cn(
           "w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-spicy_mix rounded-xl justify-between items-center",
           !termExpanded
-            ? " h-20 flex justify-between"
+            ? " h-16 flex justify-between"
             : " h-50 bg-primary drop-shadow-l text-spicy_mix items-center p-5"
         )}
       >
@@ -74,9 +76,9 @@ function TermItem({
               )}
             ></div>
             <div className="flex justify-start gap-20">
-              <p className="text-2xl font-semibold my-4 min-w-36">{term}</p>
+              <p className="text-xl font-semibold my-4 min-w-36">{term}</p>
               <div className=" w-1.5 bg-muted"></div>
-              <p className="text-2xl font-semibold my-4">{definition}</p>
+              <p className="text-xl font-semibold my-4">{definition}</p>
             </div>
             <div className="flex gap-x-3">
               {isStarred ? (
@@ -95,73 +97,72 @@ function TermItem({
             </div>
           </>
         ) : (
-          <>
-            <p className="text-xl font-semibold mb-1">Edit term</p>
+          <div ref={ref}>
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
                 className="w-full flex flex-col space-y-2"
               >
-                <div className="w-full h-full flex justify-start items-center gap-10">
-                  <FormField
-                    control={form.control}
-                    name="term"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Term</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter term"
-                            className="w-60 rounded py-2 px-3 focus:outline-none focus:shadow-outline"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <div className="flex justify-between items-center gap-10">
+                  <div className="w-full h-full flex justify-start items-center gap-10">
+                    <FormField
+                      control={form.control}
+                      name="term"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter term"
+                              className="w-60 rounded py-2 px-3 focus:outline-none focus:shadow-outline"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                  <FormField
-                    control={form.control}
-                    name="definition"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Definition</FormLabel>
-                        <FormControl>
-                          <Input
-                            placeholder="Enter definition"
-                            className="w-80 rounded py-2 px-3 focus:outline-none focus:shadow-outline"
-                            {...field}
-                          />
-                        </FormControl>
+                    <FormField
+                      control={form.control}
+                      name="definition"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Enter definition"
+                              className="w-80 rounded py-2 px-3 focus:outline-none focus:shadow-outline"
+                              {...field}
+                            />
+                          </FormControl>
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </div>
-                <div className="flex justify-end items-end gap-x-4 self-end">
-                  <Button
-                    type="button"
-                    className="bg-secondary h-10 px-6"
-                    onClick={() => onClose()}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    type="button"
-                    className="bg-secondary h-10 px-6"
-                    onClick={() => onDelete()}
-                  >
-                    Delete
-                  </Button>
-                  <Button type="submit" className="bg-secondary h-10 px-6">
-                    Submit
-                  </Button>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <div className="flex justify-end items-end gap-x-4 self-end">
+                    <Button
+                      type="button"
+                      className="bg-secondary h-10 px-6"
+                      onClick={() => onClose()}
+                    >
+                      Cancel
+                    </Button>
+                    <Button
+                      type="button"
+                      className="bg-secondary h-10 px-6"
+                      onClick={() => onDelete()}
+                    >
+                      Delete
+                    </Button>
+                    <Button type="submit" className="bg-secondary h-10 px-6">
+                      Submit
+                    </Button>
+                  </div>
                 </div>
               </form>
             </Form>
-          </>
+          </div>
         )}
       </div>
     </Fragment>
