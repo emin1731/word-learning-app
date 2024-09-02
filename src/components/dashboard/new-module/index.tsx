@@ -14,16 +14,34 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Textarea } from "../../ui/textarea";
 import { NewModuleSchema, NewModuleType } from "./schema";
+import { useCreateModule } from "@/api/queries/module.queries";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function NewModule() {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
+  const queryClient = useQueryClient(); // Get the query client
+
+  const { mutateAsync: createModule, data: mutateData } = useCreateModule({
+    onSuccess: () => {
+      queryClient.refetchQueries({ queryKey: ["modules"] });
+    },
+  });
 
   const form = useForm<NewModuleType>({
     resolver: zodResolver(NewModuleSchema),
   });
+
   const onSubmit = async (data: NewModuleType) => {
-    alert(JSON.stringify(data));
+    const { name, description } = data;
+    await createModule({
+      name,
+      description,
+      isPrivate: true,
+    });
+    alert(JSON.stringify(mutateData));
+    onClose();
   };
+
   const onClose = () => {
     form.reset();
     setModuleExpanded(false);
@@ -56,7 +74,7 @@ export function NewModule() {
                 <div className="mb-4 flex flex-col gap-3 w-full">
                   <FormField
                     control={form.control}
-                    name="moduleName"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Username</FormLabel>
@@ -74,14 +92,14 @@ export function NewModule() {
 
                   <FormField
                     control={form.control}
-                    name="moduleDescription"
+                    name="description"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Username</FormLabel>
                         <FormControl>
                           <Textarea
                             placeholder="Description of the module"
-                            className="h-32"
+                            className="h-20"
                             {...field}
                           />
                         </FormControl>

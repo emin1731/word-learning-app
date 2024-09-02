@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const NewModuleSchema = z.object({
-  moduleName: z
+  name: z
     .string()
     .min(1, {
       message: "This field is required.",
@@ -9,7 +9,7 @@ export const NewModuleSchema = z.object({
     .max(30, {
       message: "Module name must not be longer than 30 characters.",
     }),
-  moduleDescription: z
+  description: z
     .string()
     .min(1, {
       message: "This field is required.",

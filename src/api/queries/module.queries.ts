@@ -29,7 +29,7 @@ export function useGetModuleById(moduleId: string) {
   });
 }
 
-export function useCreateModule() {
+export function useCreateModule(p0: { onSuccess: () => void }) {
   return useMutation({
     mutationFn: async (requestBody: {
       name: string;

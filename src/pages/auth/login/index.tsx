@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import Logo from "@/components/common/logo";
 import LoginImg from "@/assets/login-page.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLogin } from "@/api/queries/auth.queries";
 
 export default function LoginPage() {
@@ -23,15 +23,18 @@ export default function LoginPage() {
     resolver: zodResolver(LoginSchema),
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = async (data: LoginType) => {
     try {
       const res = await login(data);
-      console.log("Login Response:", res); // Check the structure here
+      // console.log("Login Response:", res); // Check the structure here
+      if (res.ok) navigate("/dashboard");
 
-      if (res.ok) {
-        alert(`Login successful: ${res.data.accessToken}`);
-        console.log(res.data);
-      }
+      // if (res.ok) {
+      //   alert(`Login successful: ${res.data.accessToken}`);
+      //   console.log(res.data);
+      // }
     } catch (e) {
       if (e instanceof Error) {
         alert(e.message || "An error occurred");
