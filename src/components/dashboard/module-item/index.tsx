@@ -16,6 +16,7 @@ import { Textarea } from "../../ui/textarea";
 import { ModuleItemSchema, ModuleItemType } from "./schema";
 import { Link } from "react-router-dom";
 import { EditIcon } from "lucide-react";
+import { useDeleteModule } from "@/api/queries/module.queries";
 
 export interface Module {
   id: string;
@@ -40,6 +41,7 @@ export interface Term {
 
 export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
+  const { mutateAsync: deleteModule } = useDeleteModule();
 
   const form = useForm<ModuleItemType>({
     resolver: zodResolver(ModuleItemSchema),
@@ -52,12 +54,15 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
   const onSubmit = async (data: ModuleItemType) => {
     alert(JSON.stringify(data));
   };
+
   const onClose = () => {
     form.reset();
     setModuleExpanded(false);
   };
+
   const onDelete = () => {
-    alert("Delete");
+    deleteModule(id);
+    onClose();
   };
 
   return (
@@ -66,8 +71,8 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
         className={cn(
           "w-full px-12 py-4 transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-primary-foreground rounded-xl flex justify-between items-center",
           !moduleExpanded
-            ? " h-20 mb-4 cursor-pointer"
-            : " h-72 bg-primary drop-shadow-l align-middle mb-4 "
+            ? " h-20 cursor-pointer"
+            : " h-72 bg-primary drop-shadow-l align-middle"
         )}
       >
         {!moduleExpanded ? (
