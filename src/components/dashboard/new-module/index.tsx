@@ -57,7 +57,7 @@ export function NewModule() {
               className="flex justify-center items-center h-full"
               onClick={() => setModuleExpanded(true)}
             >
-              <p className="text-xl font-semibold">Create new module</p>
+              <p className="text-2xl font-semibold">Create new module</p>
             </div>
           ) : (
             <div ref={ref} className="h-full flex items-center">
