@@ -14,6 +14,8 @@ import {
 import { Input } from "../../ui/input";
 import { useForm } from "react-hook-form";
 import { useOutsideClick } from "@/lib/hooks/use-outside-click";
+import { useDeleteTerm, useUpdateTerm } from "@/api/queries/term.queries";
+import { useParams } from "react-router-dom";
 
 interface TermItemProps {
   term: string;
@@ -30,8 +32,12 @@ function TermItem({
   isStarred,
   learningStatus,
 }: TermItemProps) {
+  const { moduleId } = useParams();
   const [termExpanded, setTermExpanded] = useState<boolean>(false);
   const ref = useOutsideClick(() => onClose());
+
+  const { mutateAsync: deleteTerm } = useDeleteTerm();
+  const { mutateAsync: updateTerm } = useUpdateTerm();
 
   const form = useForm<TermItemType>({
     resolver: zodResolver(TermItemSchema),
@@ -41,15 +47,20 @@ function TermItem({
     },
   });
   const onSubmit = async (data: TermItemType) => {
-    alert(JSON.stringify(data));
+    await updateTerm({
+      moduleId: moduleId || "",
+      status: learningStatus,
+      termId: id,
+      ...data,
+    });
     onClose();
   };
   const onClose = () => {
     form.reset();
     setTermExpanded(false);
   };
-  const onDelete = () => {
-    alert("Delete");
+  const onDelete = async () => {
+    await deleteTerm({ moduleId: moduleId || "", termId: id });
   };
 
   const handleClick = () => {

@@ -1,6 +1,6 @@
 import { useGetModuleById } from "@/api/queries/module.queries";
-import TermItem from "@/components/dashboard/term-item";
 import { Link, useParams } from "react-router-dom";
+import { TermsComponent } from "./terms";
 
 const moduleOptions = [
   {
@@ -21,47 +21,21 @@ const moduleOptions = [
   },
 ];
 
-const terms = [
-  {
-    id: "1",
-    term: "Term 1",
-    definition: "Definition 1",
-    starred: true,
-    learningStatus: "learning",
-  },
-  {
-    id: "2",
-    term: "Term 2",
-    definition: "Definition 2",
-    starred: false,
-    learningStatus: "not-started",
-  },
-  {
-    id: "3",
-    term: "Term 3",
-    definition: "Definition 3",
-    starred: true,
-    learningStatus: "completed",
-  },
-  {
-    id: "4",
-    term: "Term 4",
-    definition: "Definition 4",
-    starred: false,
-    learningStatus: "not-started",
-  },
-];
-
 export const ModulePage = () => {
   const { moduleId } = useParams();
 
-  const { data: module, error, isLoading } = useGetModuleById(moduleId || "");
+  const {
+    data: module,
+    error,
+    isLoading,
+    isSuccess,
+  } = useGetModuleById(moduleId || "");
 
-  if (isLoading) {
+  if (isLoading || !isSuccess) {
     return <div>Loading...</div>;
   }
   if (error) {
-    return <div>{error.message}</div>;
+    return <div>{error}</div>;
   }
 
   return (
@@ -83,23 +57,7 @@ export const ModulePage = () => {
           </Link>
         ))}
       </div>
-      <p className="text-3xl font-semibold text-spicy_mix mb-4 w-2/3">
-        All words
-      </p>
-      <div className="flex flex-col gap-4">
-        {terms.map((item) => {
-          return (
-            <TermItem
-              id={item.id}
-              term={item.term}
-              definition={item.definition}
-              isStarred={item.starred}
-              learningStatus={item.learningStatus}
-              key={item.id}
-            />
-          );
-        })}
-      </div>
+      <TermsComponent />
     </div>
   );
 };

@@ -1,12 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "../axios-client";
+import { useQueryClient } from "@tanstack/react-query";
 
-export function useGetTerms() {
-  return useMutation({
-    mutationKey: ["terms"],
-    mutationFn: async (moduleId: string) => {
+export function useGetTerms(requestBody: { moduleId: string }) {
+  return useQuery({
+    queryKey: ["terms"],
+    queryFn: async () => {
       try {
-        const res = await client.get(`/modules/${moduleId}/terms`);
+        const res = await client.get(`/modules/${requestBody.moduleId}/terms`);
         return { ok: true, data: res.data };
       } catch (error) {
         return { ok: false, error: error || "Failed to fetch terms" };
@@ -15,7 +16,27 @@ export function useGetTerms() {
   });
 }
 
+export function useGetTermById(requestBody: {
+  moduleId: string;
+  termId: string;
+}) {
+  return useQuery({
+    queryKey: ["term"],
+    queryFn: async () => {
+      try {
+        const res = await client.get(
+          `/modules/${requestBody.moduleId}/terms/${requestBody.termId}`
+        );
+        return { ok: true, data: res.data };
+      } catch (error) {
+        return { ok: false, error: error || "Failed to fetch term" };
+      }
+    },
+  });
+}
+
 export function useCreateTerm() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (requestBody: {
       moduleId: string;
@@ -34,26 +55,14 @@ export function useCreateTerm() {
         return { ok: false, error: error || "Failed to create term" };
       }
     },
-  });
-}
-
-export function useGetTermById() {
-  return useMutation({
-    mutationKey: ["term"],
-    mutationFn: async (requestBody: { moduleId: string; termId: string }) => {
-      try {
-        const res = await client.get(
-          `/modules/${requestBody.moduleId}/terms/${requestBody.termId}`
-        );
-        return { ok: true, data: res.data };
-      } catch (error) {
-        return { ok: false, error: error || "Failed to fetch term" };
-      }
+    onSuccess: () => {
+      queryClient.invalidateQueries();
     },
   });
 }
 
 export function useUpdateTerm() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (requestBody: {
       moduleId: string;
@@ -73,10 +82,14 @@ export function useUpdateTerm() {
         return { ok: false, error: error || "Failed to update term" };
       }
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    },
   });
 }
 
 export function useDeleteTerm() {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationFn: async (requestBody: { moduleId: string; termId: string }) => {
       try {
@@ -87,6 +100,9 @@ export function useDeleteTerm() {
       } catch (error) {
         return { ok: false, error: error || "Failed to delete term" };
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries();
     },
   });
 }

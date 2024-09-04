@@ -48,7 +48,6 @@ export function useCreateModule() {
       }
     },
     onSuccess: () => {
-      // Refetch the modules query after a new module is created
       queryClient.invalidateQueries();
     },
   });
@@ -76,7 +75,6 @@ export function useUpdateModule() {
       }
     },
     onSuccess: () => {
-      // Refetch the modules query after a new module is created
       queryClient.invalidateQueries();
     },
   });
@@ -96,7 +94,6 @@ export function useDeleteModule() {
       }
     },
     onSuccess: () => {
-      // Refetch the modules query after a new module is created
       queryClient.invalidateQueries();
     },
   });
