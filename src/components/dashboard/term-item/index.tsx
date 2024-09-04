@@ -63,6 +63,16 @@ function TermItem({
   const onDelete = async () => {
     await deleteTerm({ moduleId: moduleId || "", termId: id });
   };
+  const onStar = async () => {
+    await updateTerm({
+      moduleId: moduleId || "",
+      termId: id,
+      isStarred: !isStarred,
+      term,
+      definition,
+      status: learningStatus,
+    });
+  };
 
   const handleClick = () => {
     setTermExpanded(true);
@@ -94,14 +104,19 @@ function TermItem({
               <p className="text-xl font-semibold my-4">{definition}</p>
             </div>
             <div className="flex gap-x-3">
-              {isStarred ? (
-                <Star
-                  fontSize="large"
-                  className="self-center cursor-pointer text-yellow-400"
-                />
-              ) : (
-                <Star fontSize="large" className="self-center cursor-pointer" />
-              )}
+              <div onClick={onStar}>
+                {isStarred ? (
+                  <Star
+                    fontSize="large"
+                    className="self-center cursor-pointer text-yellow-400"
+                  />
+                ) : (
+                  <Star
+                    fontSize="large"
+                    className="self-center cursor-pointer"
+                  />
+                )}
+              </div>
               <EditIcon
                 fontSize="large"
                 className="self-center cursor-pointer"
