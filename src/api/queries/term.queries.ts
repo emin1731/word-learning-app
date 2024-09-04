@@ -1,6 +1,7 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "../axios-client";
 import { useQueryClient } from "@tanstack/react-query";
+import { LearningStatus } from "@/lib/dto/term.dto";
 
 export function useGetTerms(requestBody: { moduleId: string }) {
   return useQuery({
@@ -43,7 +44,7 @@ export function useCreateTerm() {
       term: string;
       definition: string;
       isStarred?: boolean;
-      status?: string;
+      status?: LearningStatus;
     }) => {
       try {
         const { data } = await client.post(
@@ -70,7 +71,7 @@ export function useUpdateTerm() {
       term: string;
       definition: string;
       isStarred?: boolean;
-      status?: string;
+      status?: LearningStatus;
     }) => {
       try {
         const { data } = await client.put(

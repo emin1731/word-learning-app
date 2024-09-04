@@ -42,6 +42,11 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* Learning status colors */
+    --learning-not-started: #d9d9d9;
+    --learning-in-progress: #fdd2ae;
+    --learning-completed: #c1f6d9;
   }
 
   .dark {

@@ -17,28 +17,14 @@ import { Link } from "react-router-dom";
 import { EditIcon } from "lucide-react";
 import { useDeleteModule, useUpdateModule } from "@/api/queries/module.queries";
 import { useOutsideClick } from "@/lib/hooks/use-outside-click";
-export interface Module {
-  id: string;
-  name: string;
-  description: string;
-  numberOfTerms: number;
-  //   terms: Term[];
-  // date: number;
-  moduleId?: string; // IMPORTANT
-}
+import { ModuleDto } from "@/lib/dto/module.dto";
 
-export interface Term {
-  id: string;
-  term: string;
-  definition: string;
-  //   learningStatus: LearningStatus;
-  starred: boolean;
-  options?: string[];
-  moduleId?: string; // IMPORTANT
-  termId?: string;
-}
-
-export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
+export function ModuleItem({
+  id,
+  name,
+  description,
+  numberOfTerms,
+}: ModuleDto) {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
   const { mutateAsync: deleteModule } = useDeleteModule();
   const { mutateAsync: updateModule } = useUpdateModule();

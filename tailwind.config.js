@@ -1,4 +1,5 @@
 const { register } = require("module");
+const { start } = require("repl");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -49,6 +50,9 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        learningNotStarted: "var(--learning-not-started)",
+        learningInProgress: "var(--learning-in-progress)",
+        learningCompleted: "var(--learning-completed)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

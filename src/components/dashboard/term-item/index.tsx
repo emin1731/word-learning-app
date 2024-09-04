@@ -16,13 +16,14 @@ import { useForm } from "react-hook-form";
 import { useOutsideClick } from "@/lib/hooks/use-outside-click";
 import { useDeleteTerm, useUpdateTerm } from "@/api/queries/term.queries";
 import { useParams } from "react-router-dom";
+import { LearningStatus } from "@/lib/dto/term.dto";
 
 interface TermItemProps {
   term: string;
   definition: string;
   id: string;
   isStarred: boolean;
-  learningStatus: string;
+  learningStatus: LearningStatus;
 }
 
 function TermItem({
@@ -79,16 +80,17 @@ function TermItem({
       >
         {!termExpanded ? (
           <>
-            <div className="w-4 bg-muted absolute left-0 top-0 block h-full rounded-l-xl"></div>
             <div
               className={cn(
-                "w-4 absolute left-0 top-0 block h-full rounded-l-xl",
-                learningStatus
+                "w-4 absolute left-0 top-0 block h-full rounded-l-xl ",
+                learningStatus === "NOT_STARTED" && "bg-learningNotStarted",
+                learningStatus === "IN_PROGRESS" && "bg-learningInProgress",
+                learningStatus === "COMPLETED" && "bg-learningCompleted"
               )}
             ></div>
             <div className="flex justify-start gap-20">
               <p className="text-xl font-semibold my-4 min-w-36">{term}</p>
-              <div className=" w-1.5 bg-muted"></div>
+              <div className=" w-0.5 bg-muted"></div>
               <p className="text-xl font-semibold my-4">{definition}</p>
             </div>
             <div className="flex gap-x-3">

@@ -5,3 +5,5 @@ export interface TermDto {
   isStarred: boolean;
   status: string;
 }
+
+export type LearningStatus = "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED";
