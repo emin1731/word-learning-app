@@ -1,6 +1,7 @@
 import { useGetTerms } from "@/api/queries/term.queries";
+import { NewTerm } from "@/components/dashboard/new-term";
 import TermItem from "@/components/dashboard/term-item";
-import { TermDto } from "@/lib/dto/term.dto";
+import { LearningStatus, TermDto } from "@/lib/dto/term.dto";
 import { useParams } from "react-router-dom";
 
 export const TermsComponent = () => {
@@ -26,11 +27,12 @@ export const TermsComponent = () => {
               term={item.term}
               definition={item.definition}
               isStarred={item.isStarred}
-              learningStatus={item.status}
+              learningStatus={item.status as LearningStatus}
               key={item.id}
             />
           );
         })}
+        <NewTerm />
       </div>
     </div>
   );

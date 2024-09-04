@@ -39,7 +39,13 @@ export function useGetTermById(requestBody: {
 export function useCreateTerm() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (requestBody: {
+    mutationFn: async ({
+      moduleId,
+      term,
+      definition,
+      isStarred = false, // default value for isStarred
+      status = "NOT_STARTED", // default value for status
+    }: {
       moduleId: string;
       term: string;
       definition: string;
@@ -47,10 +53,13 @@ export function useCreateTerm() {
       status?: LearningStatus;
     }) => {
       try {
-        const { data } = await client.post(
-          `/modules/${requestBody.moduleId}/terms`,
-          requestBody
-        );
+        const { data } = await client.post(`/modules/${moduleId}/terms`, {
+          moduleId,
+          term,
+          definition,
+          isStarred,
+          status,
+        });
         return { ok: true, data };
       } catch (error) {
         return { ok: false, error: error || "Failed to create term" };
@@ -65,7 +74,14 @@ export function useCreateTerm() {
 export function useUpdateTerm() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (requestBody: {
+    mutationFn: async ({
+      moduleId,
+      termId,
+      term,
+      definition,
+      isStarred = false, // default value for isStarred
+      status = "NOT_STARTED", // default value for status
+    }: {
       moduleId: string;
       termId: string;
       term: string;
@@ -75,8 +91,8 @@ export function useUpdateTerm() {
     }) => {
       try {
         const { data } = await client.put(
-          `/modules/${requestBody.moduleId}/terms/${requestBody.termId}`,
-          requestBody
+          `/modules/${moduleId}/terms/${termId}`,
+          { moduleId, term, definition, isStarred, status }
         );
         return { ok: true, data };
       } catch (error) {

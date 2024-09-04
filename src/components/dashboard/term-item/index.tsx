@@ -85,7 +85,7 @@ function TermItem({
           "w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-spicy_mix rounded-xl justify-between items-center",
           !termExpanded
             ? " h-16 flex justify-between"
-            : " h-50 bg-primary drop-shadow-l text-spicy_mix items-center p-5"
+            : " h-20 bg-primary drop-shadow-l text-spicy_mix items-center p-5"
         )}
       >
         {!termExpanded ? (
