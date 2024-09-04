@@ -15,9 +15,8 @@ import { Textarea } from "../../ui/textarea";
 import { ModuleItemSchema, ModuleItemType } from "./schema";
 import { Link } from "react-router-dom";
 import { EditIcon } from "lucide-react";
-import { useDeleteModule } from "@/api/queries/module.queries";
+import { useDeleteModule, useUpdateModule } from "@/api/queries/module.queries";
 import { useOutsideClick } from "@/lib/hooks/use-outside-click";
-
 export interface Module {
   id: string;
   name: string;
@@ -42,18 +41,21 @@ export interface Term {
 export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
   const { mutateAsync: deleteModule } = useDeleteModule();
+  const { mutateAsync: updateModule } = useUpdateModule();
   const ref = useOutsideClick(() => onClose());
 
   const form = useForm<ModuleItemType>({
     resolver: zodResolver(ModuleItemSchema),
     defaultValues: {
-      moduleName: name,
-      moduleDescription: description,
+      name: name,
+      description: description,
     },
   });
 
   const onSubmit = async (data: ModuleItemType) => {
-    alert(JSON.stringify(data));
+    await updateModule({ id, isPrivate: false, ...data });
+    onClose();
+    form.trigger();
   };
 
   const onClose = () => {
@@ -102,7 +104,7 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
                 <div className="flex flex-col gap-3 w-full">
                   <FormField
                     control={form.control}
-                    name="moduleName"
+                    name="name"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>
@@ -119,7 +121,7 @@ export function ModuleItem({ id, name, description, numberOfTerms }: Module) {
 
                   <FormField
                     control={form.control}
-                    name="moduleDescription"
+                    name="description"
                     render={({ field }) => (
                       <FormItem>
                         <FormControl>

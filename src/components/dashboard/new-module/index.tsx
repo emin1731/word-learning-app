@@ -14,19 +14,13 @@ import { useForm } from "react-hook-form";
 import { Textarea } from "../../ui/textarea";
 import { NewModuleSchema, NewModuleType } from "./schema";
 import { useCreateModule } from "@/api/queries/module.queries";
-import { useQueryClient } from "@tanstack/react-query";
 import { useOutsideClick } from "@/lib/hooks/use-outside-click";
 
 export function NewModule() {
   const [moduleExpanded, setModuleExpanded] = useState<boolean>(false);
-  const queryClient = useQueryClient(); // Get the query client
   const ref = useOutsideClick(() => onClose());
 
-  const { mutateAsync: createModule, data: mutateData } = useCreateModule({
-    onSuccess: () => {
-      queryClient.refetchQueries({ queryKey: ["modules"] });
-    },
-  });
+  const { mutateAsync: createModule } = useCreateModule();
 
   const form = useForm<NewModuleType>({
     resolver: zodResolver(NewModuleSchema),
@@ -37,9 +31,8 @@ export function NewModule() {
     await createModule({
       name,
       description,
-      isPrivate: true,
+      isPrivate: false,
     });
-    alert(JSON.stringify(mutateData));
     onClose();
   };
 

@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "../axios-client";
+import { useQueryClient } from "@tanstack/react-query";
 
 export function useGetModules() {
   return useQuery({
@@ -30,7 +31,10 @@ export function useGetModuleById(moduleId: string) {
 }
 
 export function useCreateModule() {
+  const queryClient = useQueryClient();
+
   return useMutation({
+    mutationKey: ["modules"],
     mutationFn: async (requestBody: {
       name: string;
       description: string;
@@ -43,11 +47,18 @@ export function useCreateModule() {
         return { ok: false, error: error || "Failed to create module" };
       }
     },
+    onSuccess: () => {
+      // Refetch the modules query after a new module is created
+      queryClient.invalidateQueries();
+    },
   });
 }
 
 export function useUpdateModule() {
+  const queryClient = useQueryClient();
+
   return useMutation({
+    mutationKey: ["modules"],
     mutationFn: async (requestBody: {
       id: string;
       name: string;
@@ -64,11 +75,18 @@ export function useUpdateModule() {
         return { ok: false, error: error || "Failed to update module" };
       }
     },
+    onSuccess: () => {
+      // Refetch the modules query after a new module is created
+      queryClient.invalidateQueries();
+    },
   });
 }
 
 export function useDeleteModule() {
+  const queryClient = useQueryClient();
+
   return useMutation({
+    mutationKey: ["modules"],
     mutationFn: async (id: string) => {
       try {
         const { data } = await client.delete(`/modules/${id}`);
@@ -76,6 +94,10 @@ export function useDeleteModule() {
       } catch (error) {
         return { ok: false, error: error || "Failed to delete module" };
       }
+    },
+    onSuccess: () => {
+      // Refetch the modules query after a new module is created
+      queryClient.invalidateQueries();
     },
   });
 }

@@ -18,7 +18,6 @@ export function ModulesComponent({ modules }: { modules: ModuleDto[] }) {
   const [position, setPosition] = useState("bottom");
 
   return (
-    // <Container>
     <Fragment>
       <h1 className="text-2xl font-semibold text-primary-foreground pb-4">
         All modules

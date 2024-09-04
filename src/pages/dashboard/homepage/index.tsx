@@ -3,9 +3,9 @@ import { ModulesComponent } from "./modules";
 import { RecentlyVisited } from "./recently-visited";
 
 export const HomePage = () => {
-  const { data, isPending } = useGetModules();
+  const { data, isLoading, isSuccess } = useGetModules();
 
-  if (isPending) {
+  if (isLoading || isSuccess == false) {
     return <div>Loading...</div>;
   }
   return (
