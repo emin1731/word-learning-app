@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Fragment, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -107,12 +107,21 @@ export function NewTerm() {
                     <div className="flex justify-end items-end gap-x-4 self-end">
                       <Button
                         type="button"
-                        className="bg-secondary h-10 px-10"
+                        className={cn(
+                          buttonVariants({ variant: "secondary" }),
+                          "h-10 px-10"
+                        )}
                         onClick={() => onClose()}
                       >
                         Cancel
                       </Button>
-                      <Button type="submit" className="bg-secondary h-10 px-10">
+                      <Button
+                        type="submit"
+                        className={cn(
+                          buttonVariants({ variant: "secondary" }),
+                          "h-10 px-10"
+                        )}
+                      >
                         Submit
                       </Button>
                     </div>

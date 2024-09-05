@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Fragment, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -71,13 +71,20 @@ export function ModuleItem({
                 <p className="text-2xl font-semibold">{name} </p>
               </Link>
             </div>
-            <div className="flex align-middle gap-5">
+            <div className="flex align-middle items-center gap-5">
               <p className="text-xl cursor-default">{numberOfTerms} words</p>
-              <EditIcon
-                fontSize="large"
-                className="self-center cursor-pointer"
-                onClick={() => setModuleExpanded(true)}
-              />
+              <Button
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "customIcon" }),
+                  "h-10 p-3"
+                )}
+              >
+                <EditIcon
+                  fontSize="large"
+                  className="self-center cursor-pointer"
+                  onClick={() => setModuleExpanded(true)}
+                />
+              </Button>
             </div>
           </div>
         ) : (
@@ -126,21 +133,30 @@ export function ModuleItem({
                 {/* <div className="flex justify-end items-end gap-x-4 self-end"> */}
                 <Button
                   type="button"
-                  className="bg-secondary h-10 px-6 self-end"
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    " h-10 px-6 self-end"
+                  )}
                   onClick={() => onClose()}
                 >
                   Cancel
                 </Button>
                 <Button
                   type="button"
-                  className="bg-secondary h-10 px-6 self-end"
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    " h-10 px-6 self-end"
+                  )}
                   onClick={() => onDelete()}
                 >
                   Delete
                 </Button>
                 <Button
                   type="submit"
-                  className="bg-secondary h-10 px-6 self-end"
+                  className={cn(
+                    buttonVariants({ variant: "secondary" }),
+                    " h-10 px-6 self-end"
+                  )}
                 >
                   Submit
                 </Button>

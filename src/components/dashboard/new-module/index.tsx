@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Fragment, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -106,14 +106,20 @@ export function NewModule() {
                   </div>
                   <Button
                     type="button"
-                    className="bg-secondary h-10 w-1/2 self-end"
+                    className={cn(
+                      buttonVariants({ variant: "secondary" }),
+                      " h-10 w-1/2 self-end"
+                    )}
                     onClick={() => onClose()}
                   >
                     Cancel
                   </Button>
                   <Button
                     type="submit"
-                    className="bg-secondary h-10 w-1/2 self-end"
+                    className={cn(
+                      buttonVariants({ variant: "secondary" }),
+                      " h-10 w-1/2 self-end"
+                    )}
                   >
                     Submit
                   </Button>

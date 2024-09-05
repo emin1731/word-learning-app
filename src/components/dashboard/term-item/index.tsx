@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { EditIcon, Star } from "lucide-react";
 import { Fragment, useState } from "react";
 import { TermItemSchema, TermItemType } from "./schema";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -103,25 +103,39 @@ function TermItem({
               <div className=" w-0.5 bg-muted"></div>
               <p className="text-xl font-semibold my-4">{definition}</p>
             </div>
-            <div className="flex gap-x-3">
+            <div className="flex ">
               <div onClick={onStar}>
-                {isStarred ? (
-                  <Star
-                    fontSize="large"
-                    className="self-center cursor-pointer text-yellow-400"
-                  />
-                ) : (
-                  <Star
-                    fontSize="large"
-                    className="self-center cursor-pointer"
-                  />
-                )}
+                <Button
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "customIcon" }),
+                    "h-10 p-2"
+                  )}
+                >
+                  {isStarred ? (
+                    <Star
+                      fontSize="large"
+                      className="self-center cursor-pointer text-yellow-400"
+                    />
+                  ) : (
+                    <Star
+                      fontSize="large"
+                      className="self-center cursor-pointer"
+                    />
+                  )}
+                </Button>
               </div>
-              <EditIcon
-                fontSize="large"
-                className="self-center cursor-pointer"
-                onClick={handleClick}
-              />
+              <Button
+                className={cn(
+                  buttonVariants({ variant: "ghost", size: "customIcon" }),
+                  "h-10 p-2"
+                )}
+              >
+                <EditIcon
+                  fontSize="large"
+                  className="self-center cursor-pointer"
+                  onClick={handleClick}
+                />
+              </Button>
             </div>
           </>
         ) : (
@@ -171,19 +185,31 @@ function TermItem({
                   <div className="flex justify-end items-end gap-x-4 self-end">
                     <Button
                       type="button"
-                      className="bg-secondary h-10 px-6"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "h-10 px-6"
+                      )}
                       onClick={() => onClose()}
                     >
                       Cancel
                     </Button>
                     <Button
                       type="button"
-                      className="bg-secondary h-10 px-6"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "h-10 px-6"
+                      )}
                       onClick={() => onDelete()}
                     >
                       Delete
                     </Button>
-                    <Button type="submit" className="bg-secondary h-10 px-6">
+                    <Button
+                      type="submit"
+                      className={cn(
+                        buttonVariants({ variant: "secondary" }),
+                        "h-10 px-6"
+                      )}
+                    >
                       Submit
                     </Button>
                   </div>
