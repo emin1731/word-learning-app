@@ -2,6 +2,7 @@ import { AuthOnlyLayout } from "@/components/layouts/auth";
 import { DashboardLayout } from "@/components/layouts/dashboard";
 import LoginPage from "@/pages/auth/login";
 import RegisterPage from "@/pages/auth/register";
+import { CardsPage } from "@/pages/dashboard/cards";
 import { HomePage } from "@/pages/dashboard/homepage";
 import { ModulePage } from "@/pages/dashboard/module";
 import { ProfilePage } from "@/pages/profile-set";
@@ -15,6 +16,7 @@ export default function RoutesProvider() {
           <Route path="dashboard" element={<DashboardLayout />}>
             <Route index element={<HomePage />} />
             <Route path={":moduleId"} element={<ModulePage />} />
+            <Route path={":moduleId/cards"} element={<CardsPage />} />
           </Route>
         </Route>
         <Route path="auth">
