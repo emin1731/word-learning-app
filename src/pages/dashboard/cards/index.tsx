@@ -1,31 +1,3 @@
-// import { useParams } from "react-router-dom";
-// import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-
-// export const CardsPage = () => {
-//   const { moduleId } = useParams();
-//   return (
-//     <div>
-//       <h1>Cards</h1>
-//       <p>Here is where you can view your cards</p>
-//       <p>{moduleId}</p>
-//       <div>
-//         <Swiper
-//           spaceBetween={50}
-//           slidesPerView={3}
-//           onSlideChange={() => console.log("slide change")}
-//           onSwiper={(swiper) => console.log(swiper)}
-//         >
-//           <SwiperSlide>Slide 1</SwiperSlide>
-//           <SwiperSlide>Slide 2</SwiperSlide>
-//           <SwiperSlide>Slide 3</SwiperSlide>
-//           <SwiperSlide>Slide 4</SwiperSlide>
-//         </Swiper>
-//       </div>
-//     </div>
-//   );
-// };
-
 import { useParams } from "react-router-dom";
 
 // Import Swiper React components
@@ -38,9 +10,10 @@ import "swiper/css/pagination";
 // import required modules
 import { Navigation, Pagination, Keyboard } from "swiper/modules";
 import { ArrowBigLeft, ArrowBigRight } from "lucide-react";
-import { Fragment } from "react/jsx-runtime";
 import { useGetTerms } from "@/api/queries/term.queries";
+import { Button } from "@/components/ui/button";
 import { TermDto } from "@/lib/dto/term.dto";
+import { Flashcard } from "./flashcard";
 
 export const CardsPage = () => {
   const { moduleId } = useParams();
@@ -54,22 +27,43 @@ export const CardsPage = () => {
         pagination={{
           type: "fraction",
         }}
+        navigation={{ nextEl: ".arrow-right", prevEl: ".arrow-left" }}
         keyboard={{
           enabled: true,
         }}
-        spaceBetween={300}
-        navigation={true}
+        // spaceBetween={10}
         modules={[Pagination, Navigation, Keyboard]}
         className="mySwiper"
       >
-        {[...Array(10)].map((_, index) => (
-          <SwiperSlide key={index} className="">
-            <div className="h-48 p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl m-10 mb-20 mx-14">
-              {index + 1}
-            </div>
+        {terms?.data.map((item: TermDto, index: number) => (
+          <SwiperSlide key={index} className="pt-14">
+            <Flashcard
+              item={item}
+              index={index}
+              numberOfTerms={terms?.data.length}
+            />
+            {/* <div className="h-80 p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl m-10 mb-16 mx-44 cursor-pointer">
+              <div className="flex justify-between h-full">
+                <div className="text-xl font-semibold block">term</div>
+                <div className="text-3xl font-semibold block self-center">
+                  {item.term}
+                </div>
+                <div className="text-xl font-semibold whitespace-nowrap">
+                  {index + 1} of {terms?.data.length}
+                </div>
+              </div>
+            </div> */}
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="flex justify-center gap-x-5">
+        <Button className="arrow-left px-10">
+          <ArrowBigLeft />
+        </Button>
+        <Button className="arrow-right px-10">
+          <ArrowBigRight />
+        </Button>
+      </div>
     </div>
   );
 };
