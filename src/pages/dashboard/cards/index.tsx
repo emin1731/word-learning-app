@@ -10,11 +10,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Keyboard } from "swiper/modules";
+import NotFoundPage from "@/pages/not-found";
 
 export const CardsPage = () => {
   const { moduleId } = useParams();
+
   const { data: terms } = useGetTerms({ moduleId: moduleId || "" });
   const { data: module } = useGetModuleById(moduleId || "");
+
+  if (module?.error) {
+    return <NotFoundPage />;
+  }
+
   return (
     <div className="w-full">
       <h1 className="text-4xl font-bold text-center text-primary-foreground pb-4">

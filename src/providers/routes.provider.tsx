@@ -5,6 +5,7 @@ import RegisterPage from "@/pages/auth/register";
 import { CardsPage } from "@/pages/dashboard/cards";
 import { HomePage } from "@/pages/dashboard/homepage";
 import { ModulePage } from "@/pages/dashboard/module";
+import NotFoundPage from "@/pages/not-found";
 import { ProfilePage } from "@/pages/profile-set";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -15,8 +16,16 @@ export default function RoutesProvider() {
         <Route element={<AuthOnlyLayout />}>
           <Route path="dashboard" element={<DashboardLayout />}>
             <Route index element={<HomePage />} />
-            <Route path={":moduleId"} element={<ModulePage />} />
-            <Route path={":moduleId/cards"} element={<CardsPage />} />
+            <Route
+              path={":moduleId"}
+              element={<ModulePage />}
+              errorElement={<NotFoundPage />}
+            />
+            <Route
+              path={":moduleId/cards"}
+              element={<CardsPage />}
+              errorElement={<NotFoundPage />}
+            />
           </Route>
         </Route>
         <Route path="auth">
@@ -24,6 +33,8 @@ export default function RoutesProvider() {
           <Route path="register" element={<RegisterPage />} />
           <Route path="profile" element={<ProfilePage />} />
         </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   );

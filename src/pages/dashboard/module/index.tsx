@@ -1,6 +1,7 @@
 import { useGetModuleById } from "@/api/queries/module.queries";
 import { Link, useParams } from "react-router-dom";
 import { TermsComponent } from "./terms";
+import NotFoundPage from "@/pages/not-found";
 
 const moduleOptions = [
   {
@@ -34,13 +35,14 @@ export const ModulePage = () => {
   if (isLoading || !isSuccess) {
     return <div>Loading...</div>;
   }
-  if (error) {
-    return <div>{error}</div>;
+
+  if (module.error || error) {
+    return <NotFoundPage />;
   }
 
   return (
     <div>
-      <h1 className="text-4xl font-semibold text-spicy_mix mb-4">
+      <h1 className="text-4xl font-semibold text-spicy_mix mb-3">
         {module?.data.name}
       </h1>
       <p className="text-lg font-normal text-spicy_mix mb-4 w-2/3">
