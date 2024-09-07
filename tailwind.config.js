@@ -40,6 +40,10 @@ module.exports = {
       sans: "League Spartan, Georgia",
     },
     extend: {
+      spacing: {
+        128: "32rem",
+        152: "38rem",
+      },
       backgroundImage: {
         login: "url('/src/assets/login-page.png')",
         register: "url('/src/assets/register-page.png')",
@@ -53,6 +57,14 @@ module.exports = {
         learningNotStarted: "var(--learning-not-started)",
         learningInProgress: "var(--learning-in-progress)",
         learningCompleted: "var(--learning-completed)",
+        correct: {
+          DEFAULT: "var(--answer-correct)",
+          foreground: "var(--answer-correct-foreground)",
+        },
+        incorrect: {
+          DEFAULT: "var(--answer-incorrect)",
+          foreground: "var(--answer-incorrect-foreground)",
+        },
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

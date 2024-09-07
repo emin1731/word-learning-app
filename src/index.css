@@ -47,6 +47,13 @@
     --learning-not-started: #d9d9d9;
     --learning-in-progress: #fdd2ae;
     --learning-completed: #c1f6d9;
+
+    /* Correct/Incorrect answer colors */
+    --answer-correct: #d6ffe8;
+    --answer-correct-foreground: #22c55e;
+    --answer-incorrect: #fcecec;
+    --answer-incorrect-foreground: #ef4444;
+    /* --demo3: #F9F6F7; */
   }
 
   .dark {
