@@ -7,6 +7,7 @@ interface LearningCardProps {
   index: number;
   numberOfTerms: number;
   allTerms: TermDto[];
+  nextSlide: () => void;
 }
 
 export const LearningCard = ({
@@ -14,6 +15,7 @@ export const LearningCard = ({
   index,
   numberOfTerms,
   allTerms,
+  nextSlide,
 }: LearningCardProps) => {
   const [options, setOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
@@ -38,21 +40,11 @@ export const LearningCard = ({
     return array.sort(() => Math.random() - 0.5);
   };
 
-  //   const getOptions = () => {
-  //     const otherDefinitions = allTerms
-  //       .filter((term) => term.id !== item.id)
-  //       .map((term) => term.definition);
-
-  //     const incorrectOptions = shuffleArray(otherDefinitions).slice(0, 3);
-  //     const options = shuffleArray([item.definition, ...incorrectOptions]);
-
-  //     return options;
-  //   };
-
   const handleOptionClick = (option: string) => {
     if (selectedAnswer) return;
     setSelectedAnswer(option);
     setIsCorrect(option === item.definition);
+    nextSlide();
   };
 
   return (
