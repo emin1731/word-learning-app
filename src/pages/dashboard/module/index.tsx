@@ -3,22 +3,33 @@ import { Link, useParams } from "react-router-dom";
 import { TermsComponent } from "./terms";
 import NotFoundPage from "@/pages/not-found";
 
+import {
+  GalleryHorizontalEnd,
+  RefreshCw,
+  Apple,
+  BookCheck,
+} from "lucide-react";
+
 const moduleOptions = [
   {
     name: "Cards",
     link: "cards",
+    icon: <GalleryHorizontalEnd />,
   },
   {
     name: "Learning",
     link: "learning",
+    icon: <RefreshCw />,
   },
   {
     name: "Test",
     link: "test",
+    icon: <BookCheck />,
   },
   {
     name: "Demo",
     link: "demo",
+    icon: <Apple />,
   },
 ];
 
@@ -52,9 +63,10 @@ export const ModulePage = () => {
         {moduleOptions.map((moduleOption) => (
           <Link
             to={moduleOption.link}
-            className="w-full h-16 rounded-xl p-5 bg-white drop-shadow-l flex justify-center items-center"
+            className="w-full h-16 rounded-xl p-5 bg-white drop-shadow-l flex justify-center gap-x-3"
             key={moduleOption.link}
           >
+            <div>{moduleOption.icon}</div>
             <p className="text-xl font-semibold ">{moduleOption.name}</p>
           </Link>
         ))}

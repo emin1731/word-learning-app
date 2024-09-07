@@ -15,10 +15,10 @@ export default function DashboardNavbar() {
   const { data } = useGetProfile();
 
   return (
-    <nav className="top-0 z-50 w-full bg-background border-b border-gray-200 px-12">
+    <nav className="top-0 z-50 w-full bg-secondary border-b border-gray-200 px-12">
       <div className="flex items-center justify-between px-3 py-6 md:py-3 lg:px-5 lg:pl-3">
         <div className="flex items-center justify-start rtl:justify-end">
-          <a href="/" className="flex ms-2 md:me-24">
+          <a href="/dashboard" className="flex ms-2 md:me-24">
             <Logo className="w-40 md:w-20 h-auto" />
           </a>
         </div>

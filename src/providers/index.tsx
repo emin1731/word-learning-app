@@ -6,7 +6,7 @@ const client = new QueryClient();
 export default function Provider() {
   return (
     <QueryClientProvider client={client}>
-      <RoutesProvider />;
+      <RoutesProvider />
     </QueryClientProvider>
   );
 }
