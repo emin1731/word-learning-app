@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useGetModuleById } from "@/api/queries/module.queries";
-import { useGetTerms } from "@/api/queries/term.queries";
+import { useGetTerms, useUpdateTerm } from "@/api/queries/term.queries";
 import { TermDto } from "@/lib/dto/term.dto";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -9,15 +9,18 @@ import "swiper/css/pagination";
 import { Navigation, Keyboard, EffectCards } from "swiper/modules";
 import NotFoundPage from "@/pages/not-found";
 import { LearningCard } from "./learning-card";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { type Swiper as SwiperRef } from "swiper";
+import { LearningCompleted } from "./learning-completed";
 
 export const LearningPage = () => {
+  const [isComplete, setIsComplete] = useState(false);
   const swiperRef = useRef<SwiperRef>();
   const { moduleId } = useParams();
 
   const { data: terms } = useGetTerms({ moduleId: moduleId || "" });
   const { data: module } = useGetModuleById(moduleId || "");
+  const { mutateAsync: updateTerm } = useUpdateTerm();
 
   if (module?.error) {
     return <NotFoundPage />;
@@ -30,6 +33,10 @@ export const LearningPage = () => {
       }
     }, 1000);
   };
+
+  if (isComplete) {
+    return <LearningCompleted terms={terms?.data} />;
+  }
 
   return (
     <div className="w-full">
@@ -62,6 +69,8 @@ export const LearningPage = () => {
               numberOfTerms={terms?.data.length}
               allTerms={terms?.data}
               nextSlide={nextSlide}
+              setIsComplete={setIsComplete}
+              updateTerm={updateTerm}
             />
           </SwiperSlide>
         ))}

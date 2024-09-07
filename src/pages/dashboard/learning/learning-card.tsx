@@ -1,6 +1,7 @@
-import { TermDto } from "@/lib/dto/term.dto";
+import { LearningStatus, TermDto } from "@/lib/dto/term.dto";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 interface LearningCardProps {
   item: TermDto;
@@ -8,6 +9,14 @@ interface LearningCardProps {
   numberOfTerms: number;
   allTerms: TermDto[];
   nextSlide: () => void;
+  setIsComplete: (value: boolean) => void;
+  updateTerm: (data: {
+    moduleId: string;
+    termId: string;
+    term: string;
+    definition: string;
+    status?: LearningStatus;
+  }) => void;
 }
 
 export const LearningCard = ({
@@ -16,7 +25,10 @@ export const LearningCard = ({
   numberOfTerms,
   allTerms,
   nextSlide,
+  setIsComplete,
+  updateTerm,
 }: LearningCardProps) => {
+  const { moduleId } = useParams();
   const [options, setOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -44,7 +56,27 @@ export const LearningCard = ({
     if (selectedAnswer) return;
     setSelectedAnswer(option);
     setIsCorrect(option === item.definition);
+
+    if (option === item.definition) {
+      setTimeout(() => {
+        updateTerm({
+          moduleId: moduleId || "",
+          termId: item.id,
+          term: item.term,
+          definition: item.definition,
+          status:
+            (item.status as string) === "NOT_STARTED"
+              ? "IN_PROGRESS"
+              : "COMPLETED",
+        });
+      }, 1000);
+    }
     nextSlide();
+    if (item.definition === allTerms[allTerms.length - 1].definition) {
+      setTimeout(() => {
+        setIsComplete(true);
+      }, 1000);
+    }
   };
 
   return (
@@ -89,7 +121,7 @@ export const LearningCard = ({
                 onClick={() => handleOptionClick(item)}
               >
                 <div className="flex justify-between items-center gap-x-3">
-                  <div className="text-lg">item {item}</div>
+                  <div className="text-lg">{item}</div>
                   <div className="bg-primary size-7 flex justify-center items-center rounded-full">
                     {index + 1}
                   </div>
