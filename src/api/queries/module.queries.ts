@@ -2,12 +2,14 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "../axios-client";
 import { useQueryClient } from "@tanstack/react-query";
 
-export function useGetModules() {
+export type SortOptions = "name_asc" | "name_desc" | "date_asc" | "date_desc";
+
+export function useGetModules(sortBy: SortOptions) {
   return useQuery({
-    queryKey: ["modules"],
+    queryKey: ["modules", sortBy],
     queryFn: async () => {
       try {
-        const res = await client.get(`/modules`);
+        const res = await client.get(`/modules?sortBy=${sortBy}`);
         return { ok: true, data: res.data };
       } catch (error) {
         return { ok: false, error: error || "Failed to fetch modules" };

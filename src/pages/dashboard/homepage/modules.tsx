@@ -13,9 +13,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ModuleDto } from "@/lib/dto/module.dto";
+import { SortOptions, useGetModules } from "@/api/queries/module.queries";
 
-export function ModulesComponent({ modules }: { modules: ModuleDto[] }) {
-  const [position, setPosition] = useState("bottom");
+export function ModulesComponent() {
+  // const [position, setPosition] = useState("bottom");
+  const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
+
+  const { data: modules, isLoading, isSuccess } = useGetModules(sortBy);
+
+  if (isLoading || isSuccess == false) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Fragment>
@@ -39,20 +47,25 @@ export function ModulesComponent({ modules }: { modules: ModuleDto[] }) {
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuRadioGroup
-                value={position}
-                onValueChange={setPosition}
+                value={sortBy}
+                onValueChange={(value: string) =>
+                  setSortBy(value as SortOptions)
+                }
               >
-                <DropdownMenuRadioItem value="top" className="text-base">
-                  Top
+                <DropdownMenuRadioItem value="date_asc" className="text-base">
+                  Date: Newest - Oldest
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="date_desc" className="text-base">
+                  Date: Oldest - Newest
+                </DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="name_asc" className="text-base">
+                  Name: A - Z
                 </DropdownMenuRadioItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioItem value="bottom" className="text-base">
-                  Bottom
+                <DropdownMenuRadioItem value="name_desc" className="text-base">
+                  Name: Z - A
                 </DropdownMenuRadioItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuRadioItem value="right" className="text-base">
-                  Right
-                </DropdownMenuRadioItem>
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -68,7 +81,7 @@ export function ModulesComponent({ modules }: { modules: ModuleDto[] }) {
       <NewModule />
 
       <div className="flex justify-start gap-4 mb-20 flex-col">
-        {modules.map((item) => {
+        {modules.data.map((item: ModuleDto) => {
           return (
             <ModuleItem
               id={item.id}
