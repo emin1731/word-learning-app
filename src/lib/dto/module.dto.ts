@@ -4,6 +4,6 @@ export interface ModuleDto {
   id: string;
   name: string;
   description: string;
-  terms: TermDto[];
+  terms?: TermDto[];
   numberOfTerms: number;
 }
