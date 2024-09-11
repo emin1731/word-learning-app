@@ -11,11 +11,16 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation, Pagination, Keyboard } from "swiper/modules";
 import NotFoundPage from "@/pages/not-found";
+// import { useState } from "react";
 
 export const CardsPage = () => {
   const { moduleId } = useParams();
+  // const [sortBy, setSortBy] = useState<SortOptions>("date_desc");
 
-  const { data: terms } = useGetTerms({ moduleId: moduleId || "" });
+  const { data: terms } = useGetTerms({
+    moduleId: moduleId || "",
+    sortBy: "date_desc",
+  });
   const { data: module } = useGetModuleById(moduleId || "");
 
   if (module?.error) {

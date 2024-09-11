@@ -3,7 +3,11 @@ import { ModuleDto } from "@/lib/dto/module.dto";
 import { Link } from "react-router-dom";
 
 export const RecentlyVisited = () => {
-  const { data: modules, isLoading, isSuccess } = useGetModules("date_desc");
+  const {
+    data: modules,
+    isLoading,
+    isSuccess,
+  } = useGetModules("date_desc", "");
 
   if (isLoading || isSuccess == false) {
     return <div>Loading...</div>;

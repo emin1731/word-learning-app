@@ -4,12 +4,14 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export type SortOptions = "name_asc" | "name_desc" | "date_asc" | "date_desc";
 
-export function useGetModules(sortBy: SortOptions) {
+export function useGetModules(sortBy: SortOptions, searchQuery: string) {
   return useQuery({
-    queryKey: ["modules", sortBy],
+    queryKey: ["modules", sortBy, searchQuery],
     queryFn: async () => {
       try {
-        const res = await client.get(`/modules?sortBy=${sortBy}`);
+        const res = await client.get(
+          `/modules?sortBy=${sortBy}&searchQuery=${searchQuery}`
+        );
         return { ok: true, data: res.data };
       } catch (error) {
         return { ok: false, error: error || "Failed to fetch modules" };

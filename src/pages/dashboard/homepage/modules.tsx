@@ -14,12 +14,19 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ModuleDto } from "@/lib/dto/module.dto";
 import { SortOptions, useGetModules } from "@/api/queries/module.queries";
+import useDebounce from "@/lib/hooks/use-debounce";
 
 export function ModulesComponent() {
   // const [position, setPosition] = useState("bottom");
   const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedValue = useDebounce(searchQuery, 500);
 
-  const { data: modules, isLoading, isSuccess } = useGetModules(sortBy);
+  const {
+    data: modules,
+    isLoading,
+    isSuccess,
+  } = useGetModules(sortBy, debouncedValue);
 
   if (isLoading || isSuccess == false) {
     return <div>Loading...</div>;
@@ -74,6 +81,8 @@ export function ModulesComponent() {
           <Input
             placeholder="Search modules"
             className="w-80 bg-primary text-primary-foreground text-base px-10 font-semibold"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>

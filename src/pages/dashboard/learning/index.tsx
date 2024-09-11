@@ -15,10 +15,14 @@ import { LearningCompleted } from "./learning-completed";
 
 export const LearningPage = () => {
   const [isComplete, setIsComplete] = useState(false);
+  // const [sortBy, setSortBy] = useState<SortOptions>("date_desc");
   const swiperRef = useRef<SwiperRef>();
   const { moduleId } = useParams();
 
-  const { data: terms } = useGetTerms({ moduleId: moduleId || "" });
+  const { data: terms } = useGetTerms({
+    moduleId: moduleId || "",
+    sortBy: "date_desc",
+  });
   const { data: module } = useGetModuleById(moduleId || "");
   const { mutateAsync: updateTerm } = useUpdateTerm();
 

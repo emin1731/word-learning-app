@@ -2,13 +2,19 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { client } from "../axios-client";
 import { useQueryClient } from "@tanstack/react-query";
 import { LearningStatus } from "@/lib/dto/term.dto";
+import { SortOptions } from "./module.queries";
 
-export function useGetTerms(requestBody: { moduleId: string }) {
+export function useGetTerms(requestBody: {
+  moduleId: string;
+  sortBy: SortOptions;
+}) {
   return useQuery({
-    queryKey: ["terms"],
+    queryKey: ["terms", requestBody.sortBy],
     queryFn: async () => {
       try {
-        const res = await client.get(`/modules/${requestBody.moduleId}/terms`);
+        const res = await client.get(
+          `/modules/${requestBody.moduleId}/terms?sortBy=${requestBody.sortBy}`
+        );
         return { ok: true, data: res.data };
       } catch (error) {
         return { ok: false, error: error || "Failed to fetch terms" };
