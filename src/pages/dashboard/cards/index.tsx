@@ -19,7 +19,8 @@ export const CardsPage = () => {
 
   const { data: terms } = useGetTerms({
     moduleId: moduleId || "",
-    sortBy: "date_desc",
+    sortBy: "date_asc",
+    searchQuery: "",
   });
   const { data: module } = useGetModuleById(moduleId || "");
 

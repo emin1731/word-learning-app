@@ -22,6 +22,7 @@ export const LearningPage = () => {
   const { data: terms } = useGetTerms({
     moduleId: moduleId || "",
     sortBy: "date_desc",
+    searchQuery: "",
   });
   const { data: module } = useGetModuleById(moduleId || "");
   const { mutateAsync: updateTerm } = useUpdateTerm();
