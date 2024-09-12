@@ -17,11 +17,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+import useDebounce from "@/lib/hooks/use-debounce";
 
 export const TermsComponent = () => {
   const { moduleId } = useParams();
-  const [sortBy, setSortBy] = useState<SortOptions>("date_desc");
+  const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
   const { mutateAsync: updateTerm } = useUpdateTerm();
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedValue = useDebounce(searchQuery, 500);
 
   const {
     data: terms,
@@ -30,6 +33,7 @@ export const TermsComponent = () => {
   } = useGetTerms({
     moduleId: moduleId || "",
     sortBy: sortBy,
+    searchQuery: debouncedValue,
   });
 
   if (isLoading || !isSuccess) {
@@ -106,6 +110,8 @@ export const TermsComponent = () => {
           <Input
             placeholder="Search modules"
             className="w-80 bg-primary text-primary-foreground text-base px-10 font-semibold"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>

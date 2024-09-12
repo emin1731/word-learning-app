@@ -7,13 +7,14 @@ import { SortOptions } from "./module.queries";
 export function useGetTerms(requestBody: {
   moduleId: string;
   sortBy: SortOptions;
+  searchQuery: string;
 }) {
   return useQuery({
-    queryKey: ["terms", requestBody.sortBy],
+    queryKey: ["terms", requestBody.sortBy, requestBody.searchQuery],
     queryFn: async () => {
       try {
         const res = await client.get(
-          `/modules/${requestBody.moduleId}/terms?sortBy=${requestBody.sortBy}`
+          `/modules/${requestBody.moduleId}/terms?sortBy=${requestBody.sortBy}&searchQuery=${requestBody.searchQuery}`
         );
         return { ok: true, data: res.data };
       } catch (error) {
