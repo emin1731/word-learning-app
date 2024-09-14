@@ -16,8 +16,8 @@ export default function RoutesProvider() {
     <BrowserRouter>
       <Routes>
         <Route element={<AuthOnlyLayout />}>
-          <Route path="profile" element={<ProfilePage />} />
           <Route path="dashboard" element={<DashboardLayout />}>
+            <Route path="profile" element={<ProfilePage />} />
             <Route index element={<HomePage />} />
             <Route path={":moduleId"} element={<ModulePage />} />
             <Route path={":moduleId/cards"} element={<CardsPage />} />

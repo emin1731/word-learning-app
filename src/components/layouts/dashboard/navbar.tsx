@@ -12,7 +12,7 @@ import {
 import { Link } from "react-router-dom";
 
 export default function DashboardNavbar() {
-  const { data } = useGetProfile();
+  const { data: profile } = useGetProfile();
 
   return (
     <nav className="top-0 z-50 w-full bg-secondary border-b border-gray-200 px-12">
@@ -33,17 +33,17 @@ export default function DashboardNavbar() {
                   <div className="size-10 rounded-full bg-muted"></div>
                   <div>
                     <p className="text-base font-semibold">
-                      {data?.data.res.username}
+                      {profile?.data.username}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {data?.data.res.email}
+                      {profile?.data.email}
                     </p>
                   </div>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link to="/profile">Profile</Link>
+                <Link to="/dashboard/profile">Profile</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>Dark mode</DropdownMenuItem>
               <DropdownMenuSeparator />
