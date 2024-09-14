@@ -71,7 +71,7 @@ export const TermsComponent = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="outline"
+                variant="default"
                 className="bg-primary text-base px-10 font-semibold"
               >
                 Sort

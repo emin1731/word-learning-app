@@ -82,10 +82,10 @@ function TermItem({
     <Fragment key={id}>
       <div
         className={cn(
-          "w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-spicy_mix rounded-xl justify-between items-center",
+          "w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-card border drop-shadow-l text-spicy_mix rounded-xl justify-between items-center",
           !termExpanded
             ? " h-16 flex justify-between"
-            : " h-20 bg-primary drop-shadow-l text-spicy_mix items-center p-5"
+            : " h-20 bg-card border drop-shadow-l text-spicy_mix items-center p-5"
         )}
       >
         {!termExpanded ? (
@@ -103,7 +103,7 @@ function TermItem({
               <div className=" w-0.5 bg-muted"></div>
               <p className="text-xl font-semibold my-4">{definition}</p>
             </div>
-            <div className="flex ">
+            <div className="flex">
               <div onClick={onStar}>
                 <Button
                   className={cn(

@@ -63,7 +63,7 @@ export const ModulePage = () => {
         {moduleOptions.map((moduleOption) => (
           <Link
             to={moduleOption.link}
-            className="w-full h-16 rounded-xl p-5 bg-white drop-shadow-l flex justify-center gap-x-3"
+            className="w-full h-16 rounded-xl p-5 bg-card border drop-shadow-l flex justify-center gap-x-3"
             key={moduleOption.link}
           >
             <div>{moduleOption.icon}</div>

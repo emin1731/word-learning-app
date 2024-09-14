@@ -22,7 +22,7 @@ export const RecentlyVisited = () => {
         {modules.data?.slice(0, 4).map((module: ModuleDto) => (
           <Link to={module.id}>
             <div
-              className="h-40 rounded-xl p-5 bg-white drop-shadow-l text-primary-foreground"
+              className="h-40 rounded-xl p-5 bg-card border drop-shadow-l text-primary-foreground"
               key={module.name}
             >
               <p className="text-xl font-semibold ">{module.name}</p>

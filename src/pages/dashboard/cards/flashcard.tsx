@@ -48,7 +48,7 @@ export const Flashcard = ({ item, index, numberOfTerms }: FlashcardProps) => {
   return (
     <ReactCardFlip isFlipped={isDefinitionExpanded} flipDirection="horizontal">
       <div
-        className="h-96 p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl  mb-16 mx-44 cursor-pointer"
+        className="h-96 p-5 bg-card border text-primary-foreground drop-shadow-l rounded-xl  mb-16 mx-44 cursor-pointer"
         onClick={() => onCardClick()}
       >
         <div className="flex justify-between h-full">
@@ -113,7 +113,7 @@ export const Flashcard = ({ item, index, numberOfTerms }: FlashcardProps) => {
       </div>
 
       <div
-        className="h-96 p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl  mb-16 mx-44 cursor-pointer"
+        className="h-96 p-5 bg-card border text-primary-foreground drop-shadow-l rounded-xl  mb-16 mx-44 cursor-pointer"
         onClick={() => setIsDefinitionExpanded(!isDefinitionExpanded)}
       >
         <div className="flex justify-between h-full">

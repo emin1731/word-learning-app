@@ -46,10 +46,10 @@ export function NewModule() {
       <div>
         <div
           className={cn(
-            "w-full p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
+            "w-full p-5 bg-card border text-primary-foreground drop-shadow-l rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
             !moduleExpanded
               ? " h-20 mb-4 cursor-pointer"
-              : " h-48 bg-primary drop-shadow-l align-middle mb-4 "
+              : " h-48 bg-card border drop-shadow-l align-middle mb-4 "
           )}
         >
           {!moduleExpanded ? (

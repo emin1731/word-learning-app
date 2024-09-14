@@ -47,10 +47,10 @@ export function NewTerm() {
       <div>
         <div
           className={cn(
-            "w-full p-5 bg-primary text-primary-foreground drop-shadow-l rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
+            "w-full p-5 bg-card border text-primary-foreground drop-shadow-l rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
             !termExpanded
               ? " h-16 mb-4 cursor-pointer"
-              : " h-24 bg-primary drop-shadow-l p-5"
+              : " h-24 bg-card border drop-shadow-l p-5"
           )}
         >
           {!termExpanded ? (

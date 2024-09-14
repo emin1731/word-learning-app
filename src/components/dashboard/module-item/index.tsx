@@ -58,10 +58,10 @@ export function ModuleItem({
     <Fragment>
       <div
         className={cn(
-          "w-full px-10 py-5 bg-primary drop-shadow-l text-primary-foreground rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
+          "w-full px-10 py-5 bg-card border drop-shadow-l text-primary-foreground rounded-xl transition-height duration-300 ease-in-out overflow-hidden",
           !moduleExpanded
             ? " h-20 cursor-pointer"
-            : " h-48 bg-primary drop-shadow-l align-middle"
+            : " h-48 bg-card border drop-shadow-l align-middle"
         )}
       >
         {!moduleExpanded ? (
