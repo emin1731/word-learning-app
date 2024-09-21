@@ -11,7 +11,7 @@ interface SettingsLink {
   name: string;
 }
 
-export const settingsLinks: SettingsLink[] = [
+const settingsLinks: SettingsLink[] = [
   {
     title: "Profile",
     name: "profile",
@@ -46,8 +46,10 @@ export const ProfilePage = () => {
         <div className="flex gap-x-5">
           <div className="size-32 bg-primary border rounded-full"></div>
           <div>
-            <div className="text-2xl font-semibold">John Doe</div>
-            <div className="text-lg">{profile?.data.username}</div>
+            <div className="text-2xl font-semibold">
+              {profile?.data.username}
+            </div>
+            <div className="text-lg">{profile?.data.email}</div>
             <div className="text-sm text-muted">Hello</div>
           </div>
         </div>
