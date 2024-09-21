@@ -42,8 +42,8 @@ export function ModulesComponent() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                variant="outline"
-                className="bg-primary text-base px-10 font-semibold"
+                variant="default"
+                className="text-base px-10 font-semibold"
               >
                 Sort
               </Button>
@@ -80,7 +80,7 @@ export function ModulesComponent() {
         <div>
           <Input
             placeholder="Search modules"
-            className="w-80 bg-primary text-primary-foreground text-base px-10 font-semibold"
+            className="w-80 bg-primary dark:bg-secondary text-primary-foreground text-base px-10 font-semibold"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />

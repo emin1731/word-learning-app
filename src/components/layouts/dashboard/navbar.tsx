@@ -6,11 +6,11 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Moon, Sun, User, LogOut } from "lucide-react";
 
 export default function DashboardNavbar() {
   const { data } = useGetProfile();
@@ -41,7 +41,7 @@ export default function DashboardNavbar() {
         <div className="flex items-center">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <div className="size-10 rounded-full bg-muted"></div>
+              <div className="size-10 rounded-full bg-primary"></div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56 p-2">
               <DropdownMenuLabel>
@@ -49,25 +49,38 @@ export default function DashboardNavbar() {
                   <div className="size-10 rounded-full bg-muted"></div>
                   <div>
                     <p className="text-base font-semibold">
-                      {data?.data.res.username}
+                      {data?.data.username}
                     </p>
-                    <p className="text-xs text-gray-500">
-                      {data?.data.res.email}
-                    </p>
+                    <p className="text-xs text-gray-500">{data?.data.email}</p>
                   </div>
                 </div>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link to="/profile">Profile</Link>
+                <div className="flex gap-x-1 items-center justify-start">
+                  <User size={16} />
+                  <Link to="/profile">Profile</Link>
+                </div>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={toggleTheme}>
-                Dark mode
+                {theme === "light" ? (
+                  <div className="flex gap-x-1 items-center justify-start">
+                    <Moon size={16} />
+                    <div className="m-0">Dark mode</div>
+                  </div>
+                ) : (
+                  <div className="flex gap-x-1 items-center justify-start">
+                    <Sun size={16} />
+                    <div className="m-0">Light mode</div>
+                  </div>
+                )}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                Log out
-                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                <div className="flex gap-x-1 items-center justify-start">
+                  <LogOut size={16} />
+                  <div>Log out</div>
+                </div>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

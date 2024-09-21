@@ -57,22 +57,15 @@ export const TermsComponent = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <p className="text-3xl font-semibold text-spicy_mix w-2/3">All words</p>
-        <Button
-          onClick={resetProgress}
-          className="text-base"
-          variant={"default"}
-        >
-          Reset Progress
-        </Button>
+        <p className="text-3xl font-semibold w-2/3">All words</p>
       </div>
       <div className="flex justify-between mb-5">
-        <div>
+        <div className="flex gap-x-4">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="default"
-                className="bg-primary text-base px-10 font-semibold"
+                className="text-base px-10 font-semibold"
               >
                 Sort
               </Button>
@@ -105,12 +98,19 @@ export const TermsComponent = () => {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
+          <Button
+            variant={"default"}
+            className="text-base px-10 font-semibold"
+            onClick={resetProgress}
+          >
+            Reset Progress
+          </Button>
         </div>
         <div>
           <Input
-            placeholder="Search modules"
-            className="w-80 bg-primary text-primary-foreground text-base px-10 font-semibold"
             value={searchQuery}
+            className="w-80 bg-primary dark:bg-secondary text-primary-foreground text-base px-10 font-semibold"
+            placeholder="Search terms"
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>

@@ -80,7 +80,7 @@ export const LearningCard = ({
   };
 
   return (
-    <div className="h-128 p-10 px-20 bg-primary text-primary-foreground drop-shadow-l rounded-xl mx-10 flex flex-col justify-between">
+    <div className="h-128 p-10 px-20 bg-card border text-primary-foreground drop-shadow-l rounded-xl mx-10 flex flex-col justify-between">
       <div>
         <div className="text-xl font-semibold flex justify-between mb-4">
           <div>term</div>

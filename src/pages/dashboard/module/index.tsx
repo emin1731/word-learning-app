@@ -53,10 +53,10 @@ export const ModulePage = () => {
 
   return (
     <div>
-      <h1 className="text-4xl font-semibold text-spicy_mix mb-3">
+      <h1 className="text-4xl font-semibold text-primary-foreground mb-3">
         {module?.data.name}
       </h1>
-      <p className="text-lg font-normal text-spicy_mix mb-4 w-2/3">
+      <p className="text-lg font-normal mb-4 w-2/3">
         {module?.data.description}
       </p>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">

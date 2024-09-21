@@ -74,10 +74,9 @@ export function ModuleItem({
             <div className="flex align-middle items-center gap-5">
               <p className="text-xl cursor-default">{numberOfTerms} words</p>
               <Button
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 p-3"
-                )}
+                variant={"ghost"}
+                size={"customIcon"}
+                className={"h-10 p-3"}
               >
                 <EditIcon
                   fontSize="large"

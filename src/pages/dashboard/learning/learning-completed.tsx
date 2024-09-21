@@ -21,7 +21,7 @@ export const LearningCompleted = ({ terms }: { terms: TermDto[] }) => {
       </div>
 
       {terms.map((item: TermDto) => (
-        <div className="w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-primary drop-shadow-l text-spicy_mix rounded-xl flex justify-between items-center h-16 ">
+        <div className="w-full p-1 px-10 relative transition-height duration-300 ease-in-out bg-primary drop-shadow-l rounded-xl flex justify-between items-center h-16 ">
           <div className="flex justify-start gap-20">
             <p className="text-xl font-semibold my-4 min-w-36">{item.term}</p>
             <div className=" w-0.5 bg-muted"></div>

@@ -1,7 +1,6 @@
 import { useUpdateTerm } from "@/api/queries/term.queries";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { TermDto } from "@/lib/dto/term.dto";
-import { cn } from "@/lib/utils";
 import { Edit, Lightbulb, Star } from "lucide-react";
 import { useState } from "react";
 import ReactCardFlip from "react-card-flip";
@@ -64,21 +63,19 @@ export const Flashcard = ({ item, index, numberOfTerms }: FlashcardProps) => {
           <div className="flex flex-col justify-between items-end text-lg whitespace-nowrap">
             <div className="flex gap-x-1">
               <Button
+                variant={"ghost"}
+                size={"customIcon"}
                 id="flashcard-edit-button"
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 p-2 rounded-full"
-                )}
+                className={"h-10 p-2 rounded-full"}
                 datatype="button"
                 onClick={(e) => onEditClick(e)}
               >
                 <Edit size={"20px"} />
               </Button>
               <Button
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 p-2 rounded-full"
-                )}
+                variant={"ghost"}
+                size={"customIcon"}
+                className={"h-10 p-2 rounded-full"}
                 onClick={(e) => onStarClick(e)}
               >
                 {item.isStarred ? (
@@ -98,10 +95,9 @@ export const Flashcard = ({ item, index, numberOfTerms }: FlashcardProps) => {
             </div>
             <div className="">
               <Button
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 flex items-center gap-x-1 rounded-full"
-                )}
+                variant={"ghost"}
+                size={"customIcon"}
+                className={"h-10 flex items-center gap-x-1 rounded-full"}
                 onClick={(e) => onGetHintClick(e)}
               >
                 <Lightbulb size={"20px"} />
@@ -129,18 +125,16 @@ export const Flashcard = ({ item, index, numberOfTerms }: FlashcardProps) => {
           <div className="flex flex-col justify-between items-end text-lg whitespace-nowrap">
             <div className="flex gap-x-1">
               <Button
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 p-2 rounded-full"
-                )}
+                variant={"ghost"}
+                size={"customIcon"}
+                className={"h-10 p-2 rounded-full"}
               >
                 <Edit size={"20px"} />
               </Button>
               <Button
-                className={cn(
-                  buttonVariants({ variant: "ghost", size: "customIcon" }),
-                  "h-10 p-2 rounded-full"
-                )}
+                variant={"ghost"}
+                size={"customIcon"}
+                className={"h-10 p-2 rounded-full"}
               >
                 {item.isStarred ? (
                   <Star
