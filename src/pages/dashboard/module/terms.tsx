@@ -18,6 +18,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import useDebounce from "@/lib/hooks/use-debounce";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export const TermsComponent = () => {
   const { moduleId } = useParams();
@@ -25,6 +33,7 @@ export const TermsComponent = () => {
   const { mutateAsync: updateTerm } = useUpdateTerm();
   const [searchQuery, setSearchQuery] = useState("");
   const debouncedValue = useDebounce(searchQuery, 500);
+  const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
 
   const {
     data: terms,
@@ -52,6 +61,7 @@ export const TermsComponent = () => {
         });
       }
     }
+    setIsConfirmResetOpen(false);
   };
 
   return (
@@ -98,10 +108,11 @@ export const TermsComponent = () => {
               </DropdownMenuRadioGroup>
             </DropdownMenuContent>
           </DropdownMenu>
+
           <Button
             variant={"default"}
             className="text-base px-10 font-semibold"
-            onClick={resetProgress}
+            onClick={() => setIsConfirmResetOpen(!isConfirmResetOpen)}
           >
             Reset Progress
           </Button>
@@ -130,6 +141,23 @@ export const TermsComponent = () => {
         })}
         <NewTerm />
       </div>
+      <Dialog open={isConfirmResetOpen} onOpenChange={setIsConfirmResetOpen}>
+        <DialogTrigger asChild></DialogTrigger>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="text-xl">Reset module</DialogTitle>
+          </DialogHeader>
+          <div className="py-2">
+            Are you sure you want to reset the progress of all the words? All
+            the words will be marked as not started.
+          </div>
+          <DialogFooter>
+            <Button type="submit" variant={"secondary"} onClick={resetProgress}>
+              Reset module
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

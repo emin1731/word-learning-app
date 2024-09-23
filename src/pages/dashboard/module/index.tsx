@@ -3,14 +3,15 @@ import { Link, useParams } from "react-router-dom";
 import { TermsComponent } from "./terms";
 import NotFoundPage from "@/pages/not-found";
 
-import {
-  GalleryHorizontalEnd,
-  RefreshCw,
-  Apple,
-  BookCheck,
-} from "lucide-react";
+import { GalleryHorizontalEnd, RefreshCw, BookCheck } from "lucide-react";
 
-const moduleOptions = [
+interface ModuleOption {
+  name: string;
+  link: string;
+  icon: JSX.Element;
+}
+
+const moduleOptions: ModuleOption[] = [
   {
     name: "Cards",
     link: "cards",
@@ -25,11 +26,6 @@ const moduleOptions = [
     name: "Test",
     link: "test",
     icon: <BookCheck />,
-  },
-  {
-    name: "Demo",
-    link: "demo",
-    icon: <Apple />,
   },
 ];
 
@@ -59,11 +55,11 @@ export const ModulePage = () => {
       <p className="text-lg font-normal mb-4 w-2/3">
         {module?.data.description}
       </p>
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 mb-20">
         {moduleOptions.map((moduleOption) => (
           <Link
             to={moduleOption.link}
-            className="w-full h-16 rounded-xl p-5 bg-card border drop-shadow-l flex justify-center gap-x-3"
+            className="w-full h-16 rounded-xl p-5 py-10 bg-card hover:bg-card/90 transition-colors border drop-shadow-l flex justify-center items-center gap-x-3"
             key={moduleOption.link}
           >
             <div>{moduleOption.icon}</div>
