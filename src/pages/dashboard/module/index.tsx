@@ -4,6 +4,7 @@ import { TermsComponent } from "./terms";
 import NotFoundPage from "@/pages/not-found";
 
 import { GalleryHorizontalEnd, RefreshCw, BookCheck } from "lucide-react";
+import { ProgressComponent } from "./progress";
 
 interface ModuleOption {
   name: string;
@@ -67,6 +68,7 @@ export const ModulePage = () => {
           </Link>
         ))}
       </div>
+      <ProgressComponent />
       <TermsComponent />
     </div>
   );

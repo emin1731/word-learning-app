@@ -67,7 +67,7 @@ export const TermsComponent = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
-        <p className="text-3xl font-semibold w-2/3">All words</p>
+        <h1 className="text-3xl font-semibold w-2/3">All words</h1>
       </div>
       <div className="flex justify-between mb-5">
         <div className="flex gap-x-4">
