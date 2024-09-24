@@ -1,17 +1,16 @@
-import { useGetModules } from "@/api/queries/module.queries";
 import { ModuleDto } from "@/lib/dto/module.dto";
 import { Link } from "react-router-dom";
 
-export const RecentlyVisited = () => {
-  const {
-    data: modules,
-    isLoading,
-    isSuccess,
-  } = useGetModules("date_desc", "");
+export const RecentlyVisited = ({ modules }: { modules: ModuleDto[] }) => {
+  // const {
+  //   data: modules,
+  //   isLoading,
+  //   isSuccess,
+  // } = useGetModules("date_desc", "");
 
-  if (isLoading || isSuccess == false) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading || isSuccess == false) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <div>
@@ -19,7 +18,7 @@ export const RecentlyVisited = () => {
         Recent modules
       </h1>
       <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-20">
-        {modules.data?.slice(0, 4).map((module: ModuleDto) => (
+        {modules.slice(0, 4).map((module: ModuleDto) => (
           <Link to={module.id}>
             <div
               className="h-40 rounded-xl p-5 bg-card border drop-shadow-l text-primary-foreground"

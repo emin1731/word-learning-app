@@ -1,10 +1,13 @@
-import { useGetModuleById } from "@/api/queries/module.queries";
+import { SortOptions, useGetModuleById } from "@/api/queries/module.queries";
 import { Link, useParams } from "react-router-dom";
 import { TermsComponent } from "./terms";
 import NotFoundPage from "@/pages/not-found";
 
 import { GalleryHorizontalEnd, RefreshCw, BookCheck } from "lucide-react";
 import { ProgressComponent } from "./progress";
+import { useGetTerms } from "@/api/queries/term.queries";
+import { useState } from "react";
+import useDebounce from "@/lib/hooks/use-debounce";
 
 interface ModuleOption {
   name: string;
@@ -33,6 +36,10 @@ const moduleOptions: ModuleOption[] = [
 export const ModulePage = () => {
   const { moduleId } = useParams();
 
+  const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
+  const [searchQuery, setSearchQuery] = useState("");
+  const debouncedValue = useDebounce(searchQuery, 500);
+
   const {
     data: module,
     error,
@@ -40,7 +47,21 @@ export const ModulePage = () => {
     isSuccess,
   } = useGetModuleById(moduleId || "");
 
-  if (isLoading || !isSuccess) {
+  // Fetch terms using sortBy and searchQuery
+  const { data: terms, isLoading: isTermsLoading } = useGetTerms({
+    moduleId: moduleId || "",
+    sortBy: sortBy,
+    searchQuery: debouncedValue,
+  });
+
+  // Fetch all terms for progress bar
+  const { data: allTerms, isLoading: isAllTermsLoading } = useGetTerms({
+    moduleId: moduleId || "",
+    sortBy: "date_asc",
+    searchQuery: "",
+  });
+
+  if (isLoading || !isSuccess || isTermsLoading || isAllTermsLoading) {
     return <div>Loading...</div>;
   }
 
@@ -68,8 +89,15 @@ export const ModulePage = () => {
           </Link>
         ))}
       </div>
-      <ProgressComponent />
-      <TermsComponent />
+      <ProgressComponent terms={allTerms?.data} />
+      <TermsComponent
+        moduleId={moduleId || ""}
+        terms={terms?.data}
+        sortBy={sortBy}
+        setSortBy={setSortBy}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
     </div>
   );
 };

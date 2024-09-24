@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { ModuleItem } from "@/components/dashboard/module-item/";
 import { NewModule } from "@/components/dashboard/new-module/";
 import {
@@ -13,24 +13,34 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ModuleDto } from "@/lib/dto/module.dto";
-import { SortOptions, useGetModules } from "@/api/queries/module.queries";
-import useDebounce from "@/lib/hooks/use-debounce";
+import { SortOptions } from "@/api/queries/module.queries";
 
-export function ModulesComponent() {
-  // const [position, setPosition] = useState("bottom");
-  const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
-  const [searchQuery, setSearchQuery] = useState("");
-  const debouncedValue = useDebounce(searchQuery, 500);
+export function ModulesComponent({
+  modules,
+  sortBy,
+  setSortBy,
+  searchQuery,
+  setSearchQuery,
+}: {
+  modules: ModuleDto[];
+  sortBy: SortOptions;
+  setSortBy: (sortBy: SortOptions) => void;
+  searchQuery: string;
+  setSearchQuery: (searchQuery: string) => void;
+}) {
+  // const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
+  // const [searchQuery, setSearchQuery] = useState("");
+  // const debouncedValue = useDebounce(searchQuery, 500);
 
-  const {
-    data: modules,
-    isLoading,
-    isSuccess,
-  } = useGetModules(sortBy, debouncedValue);
+  // const {
+  //   data: modules,
+  //   isLoading,
+  //   isSuccess,
+  // } = useGetModules(sortBy, debouncedValue);
 
-  if (isLoading || isSuccess == false) {
-    return <div>Loading...</div>;
-  }
+  // if (isLoading || isSuccess == false) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <Fragment>
@@ -90,7 +100,7 @@ export function ModulesComponent() {
       <NewModule />
 
       <div className="flex justify-start gap-4 mb-20 flex-col">
-        {modules.data.map((item: ModuleDto) => {
+        {modules.map((item: ModuleDto) => {
           return (
             <ModuleItem
               id={item.id}

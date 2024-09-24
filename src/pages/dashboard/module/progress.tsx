@@ -1,6 +1,4 @@
-import { useGetTerms } from "@/api/queries/term.queries";
 import { TermDto } from "@/lib/dto/term.dto";
-import { useParams } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 type StatusCount = {
@@ -29,23 +27,23 @@ const calculateStatusCount = (terms: TermDto[]): StatusCount => {
   );
 };
 
-export const ProgressComponent = () => {
-  const { moduleId } = useParams();
+export const ProgressComponent = ({ terms }: { terms: TermDto[] }) => {
+  // const { moduleId } = useParams();
 
-  const {
-    data: terms,
-    isLoading,
-    isSuccess,
-  } = useGetTerms({
-    moduleId: moduleId || "",
-    sortBy: "date_asc",
-    searchQuery: "",
-  });
+  // const {
+  //   data: terms,
+  //   isLoading,
+  //   isSuccess,
+  // } = useGetTerms({
+  //   moduleId: moduleId || "",
+  //   sortBy: "date_asc",
+  //   searchQuery: "",
+  // });
 
-  if (isLoading || !isSuccess) {
-    return <div>Loading...</div>;
-  }
-  const statusCount = calculateStatusCount(terms.data);
+  // if (isLoading || !isSuccess) {
+  //   return <div>Loading...</div>;
+  // }
+  const statusCount = calculateStatusCount(terms);
 
   return (
     <div>
@@ -57,7 +55,7 @@ export const ProgressComponent = () => {
           {
             <div
               style={{
-                width: `${(statusCount.COMPLETED / terms.data.length) * 100}%`,
+                width: `${(statusCount.COMPLETED / terms.length) * 100}%`,
               }}
               className={cn(
                 "h-14 bg-learningCompleted",
@@ -72,9 +70,7 @@ export const ProgressComponent = () => {
           {
             <div
               style={{
-                width: `${
-                  (statusCount.IN_PROGRESS / terms.data.length) * 100
-                }%`,
+                width: `${(statusCount.IN_PROGRESS / terms.length) * 100}%`,
               }}
               className={cn(
                 "h-14 bg-learningInProgress",
@@ -89,9 +85,7 @@ export const ProgressComponent = () => {
           {
             <div
               style={{
-                width: `${
-                  (statusCount.NOT_STARTED / terms.data.length) * 100
-                }%`,
+                width: `${(statusCount.NOT_STARTED / terms.length) * 100}%`,
               }}
               className={cn(
                 "h-14 bg-learningNotStarted",

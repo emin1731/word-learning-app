@@ -1,11 +1,10 @@
 import { SortOptions } from "@/api/queries/module.queries";
-import { useGetTerms, useUpdateTerm } from "@/api/queries/term.queries";
+import { useUpdateTerm } from "@/api/queries/term.queries";
 import { NewTerm } from "@/components/dashboard/new-term";
 import TermItem from "@/components/dashboard/term-item";
 import { Button } from "@/components/ui/button";
 import { LearningStatus, TermDto } from "@/lib/dto/term.dto";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
 
 import {
   DropdownMenu,
@@ -17,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import useDebounce from "@/lib/hooks/use-debounce";
 import {
   Dialog,
   DialogContent,
@@ -27,31 +25,27 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-export const TermsComponent = () => {
-  const { moduleId } = useParams();
-  const [sortBy, setSortBy] = useState<SortOptions>("date_asc");
-  const { mutateAsync: updateTerm } = useUpdateTerm();
-  const [searchQuery, setSearchQuery] = useState("");
-  const debouncedValue = useDebounce(searchQuery, 500);
+export const TermsComponent = ({
+  moduleId,
+  terms,
+  sortBy,
+  setSortBy,
+  searchQuery,
+  setSearchQuery,
+}: {
+  moduleId: string;
+  terms: TermDto[];
+  sortBy: SortOptions;
+  setSortBy: (sortBy: SortOptions) => void;
+  searchQuery: string;
+  setSearchQuery: (searchQuery: string) => void;
+}) => {
   const [isConfirmResetOpen, setIsConfirmResetOpen] = useState(false);
-
-  const {
-    data: terms,
-    isLoading,
-    isSuccess,
-  } = useGetTerms({
-    moduleId: moduleId || "",
-    sortBy: sortBy,
-    searchQuery: debouncedValue,
-  });
-
-  if (isLoading || !isSuccess) {
-    return <div>Loading...</div>;
-  }
+  const { mutateAsync: updateTerm } = useUpdateTerm();
 
   const resetProgress = async () => {
-    if (terms?.data) {
-      for (const term of terms.data) {
+    if (terms) {
+      for (const term of terms) {
         await updateTerm({
           moduleId: moduleId || "",
           termId: term.id,
@@ -127,7 +121,7 @@ export const TermsComponent = () => {
         </div>
       </div>
       <div className="flex flex-col gap-4">
-        {terms?.data.map((item: TermDto) => {
+        {terms.map((item: TermDto) => {
           return (
             <TermItem
               id={item.id}
