@@ -1,6 +1,6 @@
 # Learn! - Learn New Terms Easily!
 
-TermMaster is a web app designed to help you expand your vocabulary by mastering new terms and concepts with flashcards, learning quizzes and tests.
+Learn! is a web app designed to help you expand your vocabulary by mastering new terms and concepts with flashcards, learning quizzes and tests.
 
 ## Features
 
